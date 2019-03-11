@@ -22,6 +22,9 @@ const string ROOT_M_NAME = "";
 //   if root_user belongs to the "users" and "specieal_users" groups, and file_1.txt belongs to "root_user", and
 //   file_1.txt has rwx for group perms, should any user that belongs to either "users" or "specieal_users" have full perms
 //   to file_1.txt?
+// if group and owner perms are both --- and public is rwx, should user be able to see file?
+// if you dont have read perm but you do have write perm, does that mean you should be able to rm/rmdir a file you cant see?
+// any reason not to just do db of strings like Im doing?  what will we build on top of this?
 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -1,5 +1,6 @@
 
 # include "Dir.h"
+# include "Membership_Database.h"
 
 # include <iostream>
 
@@ -49,6 +50,14 @@ int main()
 	Dir root = Dir(ROOT_M_NAME);
 	Dir *cur_dir = &root;
 	cur_dir->m_is_root = true;
+
+	//make membership database
+	Membership_Database md = Membership_Database();
+
+	cout << md.m_group_vec.size() << endl;
+
+
+
 
 	cur_dir->touch("f1");
 	cur_dir->mkdir("stan");

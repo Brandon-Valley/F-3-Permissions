@@ -38,7 +38,6 @@ public:
 	}
 
 
-	string owner_perm_str() { return m_perm_str.substr(0,3); }
 
 private:
 
@@ -50,6 +49,13 @@ private:
 		else
 			return false;
 	}
+
+	string owner_perm_str()  { return m_perm_str.substr(0,3); }
+	string group_perm_str()  { return m_perm_str.substr(3,3); }
+	string public_perm_str() { return m_perm_str.substr(6,3); }
+
+
+
 
 
 
