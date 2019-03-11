@@ -15,7 +15,7 @@ using namespace std;
 
 
 const string ROOT_GROUP_NAME = "users";
-const string ROOT_USER_NAME  = "root_user";
+const string ROOT_USERNAME  = "root_user";
 const int GROUP_NAMES_PER_LINE = 3;
 
 
@@ -35,27 +35,25 @@ class Membership_Database
 {
 public:
 	vector<group> m_group_vec = {};
-	string m_curr_user;
+	string m_curr_username;
 
 	//assign defaults
 	Membership_Database()
 	{
-		m_curr_user = ROOT_USER_NAME;
+		m_curr_username = ROOT_USERNAME;
 		groupadd(ROOT_GROUP_NAME);
-//		cout << "in constructor, m_curr_user: " << m_curr_user << "  m_group_vec[0].users_vec[0]:  " << m_group_vec[0].users_vec[0] << endl; //```````````````````````
-
-		useradd(ROOT_USER_NAME);
-		cout << "in constructor, m_curr_user: " << m_curr_user << "  m_group_vec[0].users_vec[0]:  " << m_group_vec[0].users_vec[0] << endl; //```````````````````````
-
+		useradd(ROOT_USERNAME);
 	}
 
 	void print()
 	{
+		cout << "md: {" << endl;
 		for (int i = 0 ; i < m_group_vec.size() ; i++)
-			cout << "  " << m_group_vec[i].name << ":  " << str_vec_2_str(m_group_vec[i].users_vec) << endl;
+			cout << "      " << m_group_vec[i].name << ":  " << str_vec_2_str(m_group_vec[i].users_vec) << endl;
+		cout << "    }" << endl;
 	}
 
-	void whoami() { cout << m_curr_user << endl; }
+	void whoami() { cout << m_curr_username << endl; }
 
 
 	void groupadd(const string group_name)
@@ -101,21 +99,21 @@ public:
 	void useradd (const string new_username) { useradd_G({ROOT_GROUP_NAME}, new_username); }
 
 	//test that after you switch user this still works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// add m_curr_user to given group
+	// add m_curr_username to given group
 	void usermod_a_G (const string group_name)
 	{
 		if      (group_exists(group_name) == false)
-			throw "usermod: Could not add user " + m_curr_user + ": to group " + group_name + ": group does not exist";
-		else if (user_in_group(m_curr_user, group_name))
-			throw "usermod: Could not add user " + m_curr_user + ": to group " + group_name + ": user already in group";
+			throw "usermod: Could not add user " + m_curr_username + ": to group " + group_name + ": group does not exist";
+		else if (user_in_group(m_curr_username, group_name))
+			throw "usermod: Could not add user " + m_curr_username + ": to group " + group_name + ": user already in group";
 		else
 		{
 			int g_pos = group_pos(group_name);
-			m_group_vec[g_pos].users_vec.push_back(m_curr_user);
+			m_group_vec[g_pos].users_vec.push_back(m_curr_username);
 		}
 	}
 
-	//print out list of groups m_curr_user is member of
+	//print out list of groups m_curr_username is member of
 	void groups()
 	{
 		vector<string> group_names_2_print = {};
@@ -123,10 +121,9 @@ public:
 		//fill group_names_2_print
 		for (int i = 0 ; i < m_group_vec.size() ; i++)
 		{
-			if (user_in_group(m_curr_user, m_group_vec[i].name))
+			if (user_in_group(m_curr_username, m_group_vec[i].name))
 				group_names_2_print.push_back(m_group_vec[i].name);
 		}
-		cout << "in groups(), group_names_2_print.size() = " << group_names_2_print.size() << endl;//```````````````````
 
 
 		vector<string> output_vec;
@@ -148,6 +145,15 @@ public:
 		//print out lines in output_vec
 		for (int i = 0 ; i < output_vec.size() ; i++)
 			cout << output_vec[i] << endl;
+	}
+
+	//switch to given user
+	void switchto(const string username)
+	{
+		if (user_exists(username) == false)
+			throw "switchto: Could not switch to user " + username + ": user does not exist";
+		else
+			m_curr_username = username;
 	}
 
 

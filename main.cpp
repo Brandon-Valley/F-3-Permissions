@@ -54,27 +54,53 @@ int main()
 	//make membership database
 	Membership_Database md = Membership_Database();
 
-	cout << md.m_group_vec.size() << endl;
 
 
-	md.whoami();
-	md.print();
 
-	cur_dir->touch("f1");
-	cur_dir->mkdir("stan");
-	cur_dir->dot_slash("f1");
-//	cur_dir->dot_slash("f2");
-//	cur_dir->dot_slash("stan");
+	//testing
+	try
+	{
+		try
+		{
 
-	md.groupadd("u2");
-	md.groupadd("u3");
-	md.groupadd("u4");
-	md.groupadd("u5");
-//	md.useradd_G({"users", "u2", "u3", "u4", "u5"});
-	md.groups();
-	cout << "here" << endl;
 
-	md.print();
+			cout << md.m_group_vec.size() << endl;
+
+
+			md.whoami();
+			md.print();
+
+			cur_dir->touch("f1");
+			cur_dir->mkdir("stan");
+			cur_dir->dot_slash("f1");
+		//	cur_dir->dot_slash("f2");
+		//	cur_dir->dot_slash("stan");
+
+			md.groupadd("u2");
+			md.groupadd("u3");
+			md.groupadd("u4");
+			md.groupadd("u5");
+			md.groups();
+			cout << "here" << endl;
+
+			md.print();
+
+			md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "joe");
+			md.print();
+
+			md.switchto("joe");
+			md.groups();
+
+
+
+
+
+		}
+		catch (string error_msg) { cout << error_msg << endl; }
+	}
+	catch (...)   { cout << "ERROR" << endl; }
+
+
 
 
 
