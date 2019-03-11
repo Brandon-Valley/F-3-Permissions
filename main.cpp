@@ -58,6 +58,7 @@ int main()
 
 
 	md.whoami();
+	md.print();
 
 	cur_dir->touch("f1");
 	cur_dir->mkdir("stan");

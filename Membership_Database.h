@@ -40,9 +40,13 @@ public:
 	//assign defaults
 	Membership_Database()
 	{
-		groupadd(ROOT_GROUP_NAME);
-		useradd_G({ROOT_GROUP_NAME}, ROOT_USER_NAME);
 		m_curr_user = ROOT_USER_NAME;
+		groupadd(ROOT_GROUP_NAME);
+//		cout << "in constructor, m_curr_user: " << m_curr_user << "  m_group_vec[0].users_vec[0]:  " << m_group_vec[0].users_vec[0] << endl; //```````````````````````
+
+		useradd(ROOT_USER_NAME);
+		cout << "in constructor, m_curr_user: " << m_curr_user << "  m_group_vec[0].users_vec[0]:  " << m_group_vec[0].users_vec[0] << endl; //```````````````````````
+
 	}
 
 	void print()
@@ -68,10 +72,10 @@ public:
 
 	// test that you cant have empty group names and that it doesnt work if you use a grop name that doesnt exist !!!!!!!!!!
 	// make new user and add it to all groups given in vec
-	void useradd_G (const vector<string> group_names_vec, const string new_user_name)
+	void useradd_G (const vector<string> group_names_vec, const string new_username)
 	{
-		if (user_exists(new_user_name))
-			throw "useradd: Could not add user " + new_user_name + ": user already exists";
+		if (user_exists(new_username))
+			throw "useradd: Could not add user " + new_username + ": user already exists";
 		else
 		{
 			//check if all groups from vec exist
@@ -79,22 +83,22 @@ public:
 			{
 				if (group_exists(group_names_vec[i]) == false)
 				{
-					throw "useradd: could not add user " + new_user_name + " one or more of the given groups do not exist";
+					throw "useradd: could not add user " + new_username + " one or more of the given groups do not exist";
 					return;
 				}
 			}
 
-			//continue if all groups exist, add new_user_name to all groups in vec
+			//continue if all groups exist, add new_username to all groups in vec
 			for (int i = 0 ; i < group_names_vec.size() ; i++)
 			{
 				int g_pos = group_pos(group_names_vec[i]);
-				m_group_vec[g_pos].users_vec.push_back(group_names_vec[i]);
+				m_group_vec[g_pos].users_vec.push_back(new_username);
 			}
 		}
 	}
 
 	// make new user and add it to ROOT_GROUP_NAME
-	void useradd (const string new_user_name) { useradd_G({ROOT_GROUP_NAME}, new_user_name); }
+	void useradd (const string new_username) { useradd_G({ROOT_GROUP_NAME}, new_username); }
 
 	//test that after you switch user this still works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// add m_curr_user to given group
