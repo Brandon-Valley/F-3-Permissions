@@ -21,6 +21,8 @@ Dir * parse(const string command, Dir * cur_dir)
 	else if (cv.size() == 1 and   cv[0] == "pwd")   { cout << dp_cur_dir->pwd() << endl; }
 	else if (cv.size() == 1 and   cv[0] == "ls")    { dp_cur_dir->ls(); }
 
+	else if (cv.size() == 1 and   cv[0].rfind("./", 0) == 0)    { dp_cur_dir->dot_slash(cv[0].substr(2)); } // if ./ at beginning of str, do dot_slash on str[2:-1]
+
 
 	else if (cv.size() == 2 and   cv[0] == "cd")     { return cur_dir->cd(cv[1]); }
 	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1]); }
@@ -47,6 +49,12 @@ int main()
 	Dir root = Dir(ROOT_M_NAME);
 	Dir *cur_dir = &root;
 	cur_dir->m_is_root = true;
+
+	cur_dir->touch("f1");
+	cur_dir->mkdir("stan");
+	cur_dir->dot_slash("f1");
+//	cur_dir->dot_slash("f2");
+//	cur_dir->dot_slash("stan");
 
 
 	while (true)

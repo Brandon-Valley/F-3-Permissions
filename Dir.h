@@ -16,8 +16,14 @@ const string ROOT_M_NAME = "";
 
 
 
+// ????????????????????????????????????????????????????????????????????????????????????????????
+// what is 1 in front of pbg thing in ls -l ?
+// if you try to ./ a file that exists but that you cannot see, should it say "no file of that name exists" or "access denied"?
 
-// why cant I put parse in utils?
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//fix error msg from last time
+
 
 
 class Dir : public File_Sys_Obj
@@ -32,6 +38,42 @@ private:
 				return true;
 		}
 		return false;
+	}
+
+
+
+	File_Sys_Obj * get_p_from_children(string name)
+	{
+		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+		{
+			if (m_child_p_vec[i]->m_name == name)
+				return m_child_p_vec[i];
+		}
+		return NULL;
+	}
+
+
+
+	File_Sys_Obj * get_file_p_from_children(string filename)
+	{
+//		File_Sys_Obj * file_p = get_file_p_from_children(filename);
+//
+//	    cout << file_p->m_name << endl;//````````````````````````````````````````````````````````````
+//
+//
+//		if (file_p == NULL or file_p->is_file() == false)
+//			return NULL;
+//		else
+//			return file_p;
+
+
+		File_Sys_Obj * file_p = get_p_from_children(filename);
+
+		if (file_p == NULL or file_p->is_file() == false)
+			return NULL;
+		else
+			return file_p;
+
 	}
 
 
@@ -251,6 +293,18 @@ public:
 		throw "chmod: cannot access " + name +": No such file or directory";
 	}
 
+
+	//"executes" file if it exists, trows execption otherwise
+	void dot_slash(const string filename)
+	{
+		File_Sys_Obj * file_p = get_file_p_from_children(filename);
+
+
+		if (file_p == NULL)
+			throw "./: cannot access " + filename +": No such file";
+		else
+		    cout << filename << " executed!" << endl;
+	}
 
 
 
