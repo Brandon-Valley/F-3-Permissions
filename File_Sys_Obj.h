@@ -19,7 +19,7 @@ class File_Sys_Obj
 public:
 	string m_owning_user = "owning_user";
 	int m_size = 888;
-	string m_perm_str = FULL_PERM_STR;
+	string m_perm_str = FULL_PERM_STR;  // owner  group  public
 	string m_1_pbg_thing = "1	pbg";
 	bool m_is_root = false;
 
@@ -38,6 +38,8 @@ public:
 	}
 
 
+	string owner_perm_str() { return m_perm_str.substr(0,3); }
+
 private:
 
 	//returns t/f if this file_sys_obj is the provided type
@@ -48,6 +50,9 @@ private:
 		else
 			return false;
 	}
+
+
+
 };
 
 

@@ -56,23 +56,25 @@ int main()
 //	cur_dir->dot_slash("f2");
 //	cur_dir->dot_slash("stan");
 
+//	cout << cur_dir->owner_perm_str() << endl;
 
-	while (true)
-	{
-		try
-		{
-			try
-			{
-				cout << cur_dir->pwd() << "  >> ";
-				string command;
-				getline(cin, command);
-//				cout << " !!!DELETE THIS!!! command recieved:  " << command << endl;//`````````````````````````````````````````````````````````````````````````````
-				cur_dir = parse(command, cur_dir);
-			}
-			catch (string error_msg) { cout << error_msg << endl; }
-		}
-		catch (...)   { cout << "ERROR" << endl; }
-	}
+
+//	while (true)
+//	{
+//		try
+//		{
+//			try
+//			{
+//				cout << cur_dir->pwd() << "  >> ";
+//				string command;
+//				getline(cin, command);
+////				cout << " !!!DELETE THIS!!! command recieved:  " << command << endl;//`````````````````````````````````````````````````````````````````````````````
+//				cur_dir = parse(command, cur_dir);
+//			}
+//			catch (string error_msg) { cout << error_msg << endl; }
+//		}
+//		catch (...)   { cout << "ERROR" << endl; }
+//	}
 	exit(0);
 	return 0;
 }
