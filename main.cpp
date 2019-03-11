@@ -57,7 +57,7 @@ int main()
 	cout << md.m_group_vec.size() << endl;
 
 
-
+	md.whoami();
 
 	cur_dir->touch("f1");
 	cur_dir->mkdir("stan");

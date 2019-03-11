@@ -25,7 +25,12 @@ const string ROOT_M_NAME = "";
 // if group and owner perms are both --- and public is rwx, should user be able to see file?
 // if you dont have read perm but you do have write perm, does that mean you should be able to rm/rmdir a file you cant see?
 // any reason not to just do db of strings like Im doing?  what will we build on top of this?
-
+// with useradd –G - we can assume there will always be just one space like last time right?
+// with useradd –G - the whole thing should fail if you include a group that doesnt exist right?
+// useradd <username> should create a NEW user and add it to the default group right?
+// there is no way to add an existing user to multiple groups at once right?
+//   "useradd: could not add user " + new_user_name + " one or more of the given groups do not exist" - ok for useradd -g
+//   when given group(s) that dont exist?
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //fix error msg from last time
