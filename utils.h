@@ -117,7 +117,18 @@ vector<string> split(string str, string token = " ")
 }
 
 
+string str_vec_2_str(vector<string> str_vec)
+{
+	string ret_str = "[ ";
 
+	for (int i = 0 ; i < str_vec.size(); i++)
+	{
+		ret_str += str_vec[i] + " ";
+	}
+	ret_str += "]";
+
+	return ret_str;
+}
 
 
 

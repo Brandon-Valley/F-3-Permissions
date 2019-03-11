@@ -65,6 +65,18 @@ int main()
 //	cur_dir->dot_slash("f2");
 //	cur_dir->dot_slash("stan");
 
+	md.groupadd("u2");
+	md.groupadd("u3");
+	md.groupadd("u4");
+	md.groupadd("u5");
+//	md.useradd_G({"users", "u2", "u3", "u4", "u5"});
+	md.groups();
+	cout << "here" << endl;
+
+	md.print();
+
+
+
 //	cout << cur_dir->owner_perm_str() << endl;
 
 

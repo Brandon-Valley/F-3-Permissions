@@ -16,6 +16,7 @@ using namespace std;
 
 const string ROOT_GROUP_NAME = "users";
 const string ROOT_USER_NAME  = "root_user";
+const int GROUP_NAMES_PER_LINE = 3;
 
 
 
@@ -44,6 +45,14 @@ public:
 		m_curr_user = ROOT_USER_NAME;
 	}
 
+	void print()
+	{
+		for (int i = 0 ; i < m_group_vec.size() ; i++)
+			cout << "  " << m_group_vec[i].name << ":  " << str_vec_2_str(m_group_vec[i].users_vec) << endl;
+	}
+
+	void whoami() { cout << m_curr_user << endl; }
+
 
 	void groupadd(const string group_name)
 	{
@@ -58,6 +67,7 @@ public:
 	}
 
 	// test that you cant have empty group names and that it doesnt work if you use a grop name that doesnt exist !!!!!!!!!!
+	// make new user and add it to all groups given in vec
 	void useradd_G (const vector<string> group_names_vec, const string new_user_name)
 	{
 		if (user_exists(new_user_name))
@@ -83,8 +93,59 @@ public:
 		}
 	}
 
+	// make new user and add it to ROOT_GROUP_NAME
+	void useradd (const string new_user_name) { useradd_G({ROOT_GROUP_NAME}, new_user_name); }
 
-	void whoami() { cout << m_curr_user << endl; }
+	//test that after you switch user this still works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// add m_curr_user to given group
+	void usermod_a_G (const string group_name)
+	{
+		if      (group_exists(group_name) == false)
+			throw "usermod: Could not add user " + m_curr_user + ": to group " + group_name + ": group does not exist";
+		else if (user_in_group(m_curr_user, group_name))
+			throw "usermod: Could not add user " + m_curr_user + ": to group " + group_name + ": user already in group";
+		else
+		{
+			int g_pos = group_pos(group_name);
+			m_group_vec[g_pos].users_vec.push_back(m_curr_user);
+		}
+	}
+
+	//print out list of groups m_curr_user is member of
+	void groups()
+	{
+		vector<string> group_names_2_print = {};
+
+		//fill group_names_2_print
+		for (int i = 0 ; i < m_group_vec.size() ; i++)
+		{
+			if (user_in_group(m_curr_user, m_group_vec[i].name))
+				group_names_2_print.push_back(m_group_vec[i].name);
+		}
+		cout << "in groups(), group_names_2_print.size() = " << group_names_2_print.size() << endl;//```````````````````
+
+
+		vector<string> output_vec;
+		string line;
+
+		//fill output_vec
+		for(int i = 0 ; i < group_names_2_print.size() ; i++)
+		{
+			if(i % GROUP_NAMES_PER_LINE != 0 or i == 0)
+				line += group_names_2_print[i] + "\t";
+			else
+			{
+				output_vec.push_back(line);
+				line = group_names_2_print[i] + "\t";
+			}
+		}
+		output_vec.push_back(line);
+
+		//print out lines in output_vec
+		for (int i = 0 ; i < output_vec.size() ; i++)
+			cout << output_vec[i] << endl;
+	}
+
 
 
 private:
@@ -122,6 +183,23 @@ private:
 				return i;
 		}
 	}
+
+
+	bool user_in_group(const string username, const string group_name)
+	{
+		int g_pos = group_pos(group_name);
+
+		for (int i = 0 ; i < m_group_vec[g_pos].users_vec.size() ; i++)
+		{
+			if (m_group_vec[g_pos].users_vec[i] == username)
+				return true;
+		}
+		return false;
+	}
+
+
+
+
 
 };
 
