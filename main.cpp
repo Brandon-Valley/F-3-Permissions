@@ -26,9 +26,9 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
 
 
 	else if (cv.size() == 2 and   cv[0] == "cd")     { return cur_dir->cd(cv[1]); }
-	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1],     md.m_curr_username, md.owning_group_name()); }
+	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "rmdir")  { cur_dir->rmdir(cv[1]); }
-	else if (cv.size() == 2 and   cv[0] == "touch")  { cur_dir->touch(cv[1],     md.m_curr_username, md.owning_group_name()); }
+	else if (cv.size() == 2 and   cv[0] == "touch")  { cur_dir->touch(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "rm")     { cur_dir->rm(cv[1]); }
 
 	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(); }
@@ -72,8 +72,8 @@ int main()
 		md.whoami();
 		md.print();
 
-		cur_dir->touch("f1"  , md.m_curr_username, md.owning_group_name());
-		cur_dir->mkdir("stan", md.m_curr_username, md.owning_group_name());
+		cur_dir->touch("f1"  , md);
+		cur_dir->mkdir("stan", md);
 		cur_dir->dot_slash("f1");
 	//	cur_dir->dot_slash("f2");
 	//	cur_dir->dot_slash("stan");
@@ -118,7 +118,7 @@ int main()
 		cout << "md.m_curr_username:  " << md.m_curr_username << endl;
 		cout << "md.owning_group_name():  " << md.owning_group_name() << endl;
 
-		cur_dir->touch("file_1", md.m_curr_username, md.owning_group_name());
+		cur_dir->touch("file_1", md);
 		cur_dir->ls_l();
 		cur_dir->chown("joe", "file_1", md);
 		cur_dir->chgrp("u4", "file_1", md);
