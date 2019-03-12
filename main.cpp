@@ -102,12 +102,21 @@ int main()
 			md.userdel_G("u2", "bob");
 			md.groups();
 
-			md.userdel("bob");//
+			md.userdel("bob");
 			md.groups();
 			md.print();
 
 //			md.switchto("jo2");
 
+			cur_dir->ls_l();
+
+			cout << "SPACER" << endl;
+			//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			cur_dir->touch("file_1");
+			cur_dir->ls_l();
+			cur_dir->chown("joe", "file_1", md);
+			cout << "SPACER" << endl;
+			cur_dir->ls_l();
 
 
 		}

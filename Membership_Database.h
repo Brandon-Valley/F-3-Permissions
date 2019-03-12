@@ -56,6 +56,20 @@ public:
 	void whoami() { cout << m_curr_username << endl; }
 
 
+	bool user_exists(const string username)
+	{
+		for (int i = 0 ; i < m_group_vec.size() ; i++)
+		{
+			for (int k = 0 ; k < m_group_vec[i].users_vec.size() ; k++)
+			{
+				if (m_group_vec[i].users_vec[k] == username)
+					return true;
+			}
+		}
+		return false;
+	}
+
+
 	void groupadd(const string group_name)
 	{
 		if (group_exists(group_name))
@@ -195,18 +209,7 @@ private:
 	}
 
 
-	bool user_exists(const string username)
-	{
-		for (int i = 0 ; i < m_group_vec.size() ; i++)
-		{
-			for (int k = 0 ; k < m_group_vec[i].users_vec.size() ; k++)
-			{
-				if (m_group_vec[i].users_vec[k] == username)
-					return true;
-			}
-		}
-		return false;
-	}
+
 
 
 	int group_pos(const string group_name)

@@ -5,6 +5,8 @@
 
 #include "File.h"
 #include "utils.h"
+#include "Membership_Database.h"
+
 
 #include<string>
 #include<vector>
@@ -220,7 +222,7 @@ public:
 	{
 		for(int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
-			cout << m_child_p_vec[i]->m_perm_str << "\t" << m_child_p_vec[i]->m_1_pbg_thing << "\t" << m_child_p_vec[i]->m_owning_user << "\t" << m_child_p_vec[i]->m_size << "\t" << m_child_p_vec[i]->m_last_date_modified << "\t" << m_child_p_vec[i]->m_name;
+			cout << m_child_p_vec[i]->m_perm_str << "\t" << m_child_p_vec[i]->m_owning_user << "\t" << m_child_p_vec[i]->m_owning_group << "\t" << m_child_p_vec[i]->m_size << "\t" << m_child_p_vec[i]->m_last_date_modified << "\t" << m_child_p_vec[i]->m_name;
 
 			if (m_child_p_vec[i]->is_dir() == true)
 				cout << "/";
@@ -310,19 +312,30 @@ public:
 
 
 	// finish with perms!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//"executes" file if it exists, trows execption otherwise
+	//"executes" file if it exists, throws exception otherwise
 	void dot_slash(const string filename)
 	{
 		File_Sys_Obj * file_p = get_file_p_from_children(filename);
 
-
 		if (file_p == NULL)
-			throw "./: cannot access " + filename +": No such file";
+			throw "./: cannot access " + filename + ": No such file";
 		else
 		    cout << filename << " executed!" << endl;
 	}
 
 
+	//Change the indicated file to be owned by the indicated user
+	void chown(const string username, const string filename, Membership_Database md)
+	{
+		File_Sys_Obj * file_p = get_file_p_from_children(filename);
+
+		if (file_p == NULL)
+			throw "chown: cannot access " + filename + ": No such file";
+		else if (md.user_exists(username) == false)
+			throw "chown: cannot access user " + username + ": user does not exist";
+		else
+			file_p->m_owning_user = username;
+	}
 
 };
 

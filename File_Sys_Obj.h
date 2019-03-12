@@ -5,6 +5,7 @@
 # include <iostream>
 
 #include "utils.h"
+#include "Membership_Database.h"
 
 #include<string>
 #include<vector>
@@ -17,10 +18,10 @@ class File_Sys_Obj
 {
 
 public:
-	string m_owning_user = "owning_user";
+	string m_owning_user = ROOT_USERNAME;
 	int m_size = 888;
 	string m_perm_str = FULL_PERM_STR;  // owner  group  public
-	string m_1_pbg_thing = "1	pbg";
+	string m_owning_group = ROOT_GROUP_NAME;
 	bool m_is_root = false;
 
 	string m_last_date_modified;
