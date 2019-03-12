@@ -1,11 +1,11 @@
-#ifndef FILE_H
-#define FILE_H
+#ifndef PERMS_H
+#define PERMS_H
 
 # include <iostream>
 
 # include "Membership_Database.h"
 # include "File_Sys_Obj.h"
-z
+
 //#include "Dir.h"
 //#include "File_Sys_Obj.h"
 //#include "utils.h"
@@ -19,7 +19,7 @@ using namespace std;
 
 
 // returns true/false if user has perms
-bool user_has_perms(const string perm_type, const File_Sys_Obj * fso, const string cur_username, Membership_Database md)
+bool user_has_perms(const char perm_type, const File_Sys_Obj * fso, Membership_Database md)
 {
 	cout << "in user has perms: " << fso->m_name << endl;//``````````````````````````````````````````````````````````````````````````
 }

@@ -6,6 +6,7 @@
 #include "File.h"
 #include "utils.h"
 #include "Membership_Database.h"
+#include "perms.h"
 
 
 #include<string>
@@ -321,14 +322,17 @@ public:
 
 	// finish with perms!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//"executes" file if it exists, throws exception otherwise
-	void dot_slash(const string filename)
+	void dot_slash(const string filename, Membership_Database md)
 	{
 		File_Sys_Obj * file_p = get_file_p_from_children(filename);
 
 		if (file_p == NULL)
 			throw "./: cannot access " + filename + ": No such file";
 		else
-		    cout << filename << " executed!" << endl;
+		{
+			if (user_has_perms('x', file_p, md))
+				cout << filename << " executed!" << endl;
+		}
 	}
 
 
