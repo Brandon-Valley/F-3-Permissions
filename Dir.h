@@ -331,7 +331,7 @@ public:
 	//Change the indicated file to be owned by the indicated user  fso_name = file_sys_obj_name
 	void chown(const string username, const string fso_name, Membership_Database md)
 	{
-		if (in_children(fso_name) == false)
+		if      (in_children(fso_name) == false)
 			throw "chown: cannot access " + fso_name + ": does not exist";
 		else if (md.user_exists(username) == false)
 			throw "chown: cannot access user " + username + ": user does not exist";
@@ -340,35 +340,23 @@ public:
 			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
 			fso_p->m_owning_user = username;
 		}
-
-
-
-//		File_Sys_Obj * file_p = get_file_p_from_children(filename);
-//
-//		if (file_p == NULL)
-//			throw "chown: cannot access " + filename + ": No such file";
-//		else if (md.user_exists(username) == false)
-//			throw "chown: cannot access user " + username + ": user does not exist";
-//		else
-//			file_p->m_owning_user = username;
 	}
 
 
 
-	// waiting to do this just in case its only supposed to work for files!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111
-//	//Change the indicated file to be owned by the indicated group
-//	void chgrp(const string group_name, const string filename, Membership_Database md)
-//	{
-//		File_Sys_Obj * file_p = get_file_p_from_children(filename);
-//
-//		if (file_p == NULL)
-//			throw "chown: cannot access " + filename + ": No such file";
-//		else if (md.user_exists(group_name) == false)
-//			throw "chown: cannot access user " + group_name + ": user does not exist";
-//		else
-//			file_p->m_owning_user = group_name;
-//	}
-
+	//Change the indicated file to be owned by the indicated group
+	void chgrp(const string group_name, const string fso_name, Membership_Database md)
+	{
+		if      (in_children(fso_name) == false)
+			throw "chgrp: cannot access " + fso_name + ": does not exist";
+		else if (md.group_exists(group_name) == false)
+			throw "chgrp: cannot access group " + group_name + ": group does not exist";
+		else
+		{
+			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
+			fso_p->m_owning_group = group_name;
+		}
+	}
 };
 
 

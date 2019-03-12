@@ -115,6 +115,9 @@ int main()
 			cur_dir->touch("file_1");
 			cur_dir->ls_l();
 			cur_dir->chown("joe", "file_1", md);
+			cur_dir->chgrp("u4", "file_1", md);
+			cur_dir->chown("joe", "stan", md);
+			cur_dir->chgrp("u4", "stan", md);
 			cout << "SPACER" << endl;
 			cur_dir->ls_l();
 

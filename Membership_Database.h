@@ -69,6 +69,16 @@ public:
 		return false;
 	}
 
+	bool group_exists(const string group_name)
+	{
+		for (int i = 0 ; i < m_group_vec.size() ; i++)
+		{
+			if (m_group_vec[i].name == group_name)
+				return true;
+		}
+		return false;
+	}
+
 
 	void groupadd(const string group_name)
 	{
@@ -197,20 +207,6 @@ public:
 
 
 private:
-
-	bool group_exists(const string group_name)
-	{
-		for (int i = 0 ; i < m_group_vec.size() ; i++)
-		{
-			if (m_group_vec[i].name == group_name)
-				return true;
-		}
-		return false;
-	}
-
-
-
-
 
 	int group_pos(const string group_name)
 	{
