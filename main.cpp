@@ -127,6 +127,8 @@ int main()
 		cout << "SPACER" << endl;
 		cur_dir->ls_l();
 
+		cur_dir->dot_slash("f1", md);
+
 
 	}
 	catch (string error_msg) { cout << error_msg << endl; }
