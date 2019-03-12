@@ -78,6 +78,18 @@ public:
 		return false;
 	}
 
+	bool user_in_group(const string username, const string group_name)
+	{
+		int g_pos = group_pos(group_name);
+
+		for (int i = 0 ; i < m_group_vec[g_pos].users_vec.size() ; i++)
+		{
+			if (m_group_vec[g_pos].users_vec[i] == username)
+				return true;
+		}
+		return false;
+	}
+
 	//returns name of first group in m_group_vec that contains user
 	string owning_group_name()
 	{
@@ -251,19 +263,6 @@ private:
 			if (m_group_vec[g_pos].users_vec[i] == username)
 				return i;
 		}
-	}
-
-
-	bool user_in_group(const string username, const string group_name)
-	{
-		int g_pos = group_pos(group_name);
-
-		for (int i = 0 ; i < m_group_vec[g_pos].users_vec.size() ; i++)
-		{
-			if (m_group_vec[g_pos].users_vec[i] == username)
-				return true;
-		}
-		return false;
 	}
 
 
