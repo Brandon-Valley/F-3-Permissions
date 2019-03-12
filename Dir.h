@@ -50,6 +50,10 @@ const string ROOT_M_NAME = "";
 
 // what should happen when the owning user of a file is deleted? should ls -l still show the deleted user as the owner?
 
+// if you have read but not write permissions to a directory, but you have full permissions to all files within the directory,
+// should you be able to cd into the directory even though you cant see it?  And if yes, should you then be able to see all
+// the files within the directory with ls?
+
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //fix error msg from last time
 
@@ -324,18 +328,46 @@ public:
 	}
 
 
-	//Change the indicated file to be owned by the indicated user
-	void chown(const string username, const string filename, Membership_Database md)
+	//Change the indicated file to be owned by the indicated user  fso_name = file_sys_obj_name
+	void chown(const string username, const string fso_name, Membership_Database md)
 	{
-		File_Sys_Obj * file_p = get_file_p_from_children(filename);
-
-		if (file_p == NULL)
-			throw "chown: cannot access " + filename + ": No such file";
+		if (in_children(fso_name) == false)
+			throw "chown: cannot access " + fso_name + ": does not exist";
 		else if (md.user_exists(username) == false)
 			throw "chown: cannot access user " + username + ": user does not exist";
 		else
-			file_p->m_owning_user = username;
+		{
+			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
+			fso_p->m_owning_user = username;
+		}
+
+
+
+//		File_Sys_Obj * file_p = get_file_p_from_children(filename);
+//
+//		if (file_p == NULL)
+//			throw "chown: cannot access " + filename + ": No such file";
+//		else if (md.user_exists(username) == false)
+//			throw "chown: cannot access user " + username + ": user does not exist";
+//		else
+//			file_p->m_owning_user = username;
 	}
+
+
+
+	// waiting to do this just in case its only supposed to work for files!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111
+//	//Change the indicated file to be owned by the indicated group
+//	void chgrp(const string group_name, const string filename, Membership_Database md)
+//	{
+//		File_Sys_Obj * file_p = get_file_p_from_children(filename);
+//
+//		if (file_p == NULL)
+//			throw "chown: cannot access " + filename + ": No such file";
+//		else if (md.user_exists(group_name) == false)
+//			throw "chown: cannot access user " + group_name + ": user does not exist";
+//		else
+//			file_p->m_owning_user = group_name;
+//	}
 
 };
 
