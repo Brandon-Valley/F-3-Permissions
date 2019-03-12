@@ -55,7 +55,6 @@ public:
 
 	void whoami() { cout << m_curr_username << endl; }
 
-
 	bool user_exists(const string username)
 	{
 		for (int i = 0 ; i < m_group_vec.size() ; i++)
@@ -78,6 +77,19 @@ public:
 		}
 		return false;
 	}
+
+	//returns name of first group in m_group_vec that contains user
+	string owning_group_name()
+	{
+		for (int i = 0 ; i < m_group_vec.size() ; i++)
+		{
+			if (user_in_group(m_curr_username, m_group_vec[i].name))
+				return m_group_vec[i].name;
+		}
+	}
+
+
+	// assignment functions VVV
 
 
 	void groupadd(const string group_name)

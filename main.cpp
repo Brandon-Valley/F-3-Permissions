@@ -10,7 +10,7 @@ using namespace std;
 
 
 //parses input commands
-Dir * parse(const string command, Dir * cur_dir)
+Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
 {
 	Dir * dp_cur_dir = static_cast<Dir*>(cur_dir);
 
@@ -26,9 +26,9 @@ Dir * parse(const string command, Dir * cur_dir)
 
 
 	else if (cv.size() == 2 and   cv[0] == "cd")     { return cur_dir->cd(cv[1]); }
-	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1]); }
+	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1],     md.m_curr_username, md.owning_group_name()); }
 	else if (cv.size() == 2 and   cv[0] == "rmdir")  { cur_dir->rmdir(cv[1]); }
-	else if (cv.size() == 2 and   cv[0] == "touch")  { cur_dir->touch(cv[1]); }
+	else if (cv.size() == 2 and   cv[0] == "touch")  { cur_dir->touch(cv[1],     md.m_curr_username, md.owning_group_name()); }
 	else if (cv.size() == 2 and   cv[0] == "rm")     { cur_dir->rm(cv[1]); }
 
 	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(); }
@@ -46,13 +46,15 @@ Dir * parse(const string command, Dir * cur_dir)
 
 int main()
 {
+	//make membership database
+	Membership_Database md = Membership_Database();
+
 	//root is the top level directory
-	Dir root = Dir(ROOT_M_NAME);
+	Dir root = Dir(ROOT_M_NAME, md.m_curr_username, md.owning_group_name());
 	Dir *cur_dir = &root;
 	cur_dir->m_is_root = true;
 
-	//make membership database
-	Membership_Database md = Membership_Database();
+
 
 
 
@@ -70,8 +72,8 @@ int main()
 			md.whoami();
 			md.print();
 
-			cur_dir->touch("f1");
-			cur_dir->mkdir("stan");
+			cur_dir->touch("f1"  , md.m_curr_username, md.owning_group_name());
+			cur_dir->mkdir("stan", md.m_curr_username, md.owning_group_name());
 			cur_dir->dot_slash("f1");
 		//	cur_dir->dot_slash("f2");
 		//	cur_dir->dot_slash("stan");
@@ -112,7 +114,7 @@ int main()
 
 			cout << "SPACER" << endl;
 			//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			cur_dir->touch("file_1");
+			cur_dir->touch("file_1", md.m_curr_username, md.owning_group_name());
 			cur_dir->ls_l();
 			cur_dir->chown("joe", "file_1", md);
 			cur_dir->chgrp("u4", "file_1", md);

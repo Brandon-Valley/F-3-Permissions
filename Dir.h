@@ -105,11 +105,13 @@ public:
 
 
 	// default constructor
-	Dir(const string name)
+	Dir(const string name, const string owning_username, const string owning_group_name)
 	{
 		m_name = name;
 		m_last_date_modified = currentDateTime();
 		m_file_sys_obj_type = "dir";
+		m_owning_username = owning_username;
+		m_owning_group_name = owning_group_name;
 	}
 
 
@@ -141,13 +143,13 @@ public:
 
 
 	//makes new dir inside current dir and adds a pointer to it to m_dir_child_p_vec
-	void mkdir(const string new_dir_name)
+	void mkdir(const string new_dir_name, const string owning_username, const string owning_group_name)
 	{
 		if (in_children(new_dir_name) == true)
 			throw "mkdir: cannot create directory ‘" + new_dir_name + "’: File exists";
 		else
 		{
-			Dir * new_dir = new Dir(new_dir_name);
+			Dir * new_dir = new Dir(new_dir_name, owning_username, owning_group_name);
 			new_dir->m_parent_dir_p = this;
 			m_child_p_vec.push_back(new_dir);
 		}
@@ -226,7 +228,7 @@ public:
 	{
 		for(int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
-			cout << m_child_p_vec[i]->m_perm_str << "\t" << m_child_p_vec[i]->m_owning_user << "\t" << m_child_p_vec[i]->m_owning_group << "\t" << m_child_p_vec[i]->m_size << "\t" << m_child_p_vec[i]->m_last_date_modified << "\t" << m_child_p_vec[i]->m_name;
+			cout << m_child_p_vec[i]->m_perm_str << "\t" << m_child_p_vec[i]->m_owning_username << "\t" << m_child_p_vec[i]->m_owning_group_name << "\t" << m_child_p_vec[i]->m_size << "\t" << m_child_p_vec[i]->m_last_date_modified << "\t" << m_child_p_vec[i]->m_name;
 
 			if (m_child_p_vec[i]->is_dir() == true)
 				cout << "/";
@@ -283,7 +285,7 @@ public:
 
 
 	// if file already exists, update m_last_date_modified, if not, make new file
-	void touch(const string name)
+	void touch(const string name, const string owning_username, const string owning_group_name)
 	{
 		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
@@ -293,7 +295,7 @@ public:
 				return;
 			}
 		}
-		File *new_file = new File(name);
+		File *new_file = new File(name, owning_username, owning_group_name);
 		m_child_p_vec.push_back(new_file);
 	}
 
@@ -338,10 +340,9 @@ public:
 		else
 		{
 			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
-			fso_p->m_owning_user = username;
+			fso_p->m_owning_username = username;
 		}
 	}
-
 
 
 	//Change the indicated file to be owned by the indicated group
@@ -354,7 +355,7 @@ public:
 		else
 		{
 			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
-			fso_p->m_owning_group = group_name;
+			fso_p->m_owning_group_name = group_name;
 		}
 	}
 };
