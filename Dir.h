@@ -18,19 +18,35 @@ const string ROOT_M_NAME = "";
 
 // ????????????????????????????????????????????????????????????????????????????????????????????
 // what is 1 in front of pbg thing in ls -l ?
+
 // if you try to ./ a file that exists but that you cannot see, should it say "no file of that name exists" or "access denied"?
+
 //   if root_user belongs to the "users" and "specieal_users" groups, and file_1.txt belongs to "root_user", and
 //   file_1.txt has rwx for group perms, should any user that belongs to either "users" or "specieal_users" have full perms
 //   to file_1.txt?
+
 // if group and owner perms are both --- and public is rwx, should user be able to see file?
+
 // if you dont have read perm but you do have write perm, does that mean you should be able to rm/rmdir a file you cant see?
+
 // any reason not to just do db of strings like Im doing?  what will we build on top of this?
+
 // with useradd –G - we can assume there will always be just one space like last time right?
+
 // with useradd –G - the whole thing should fail if you include a group that doesnt exist right?
+
 // useradd <username> should create a NEW user and add it to the default group right?
+
 // there is no way to add an existing user to multiple groups at once right?
+
 //   "useradd: could not add user " + new_user_name + " one or more of the given groups do not exist" - ok for useradd -g
 //   when given group(s) that dont exist?
+
+// LP:  any way to do group pos thing but with pointers?
+
+//----------------------------------------------------------------------------------------------------
+
+// what should happen when the owning user of a file is deleted? should ls -l still show the deleted user as the owner?
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //fix error msg from last time
@@ -67,24 +83,12 @@ private:
 
 	File_Sys_Obj * get_file_p_from_children(string filename)
 	{
-//		File_Sys_Obj * file_p = get_file_p_from_children(filename);
-//
-//	    cout << file_p->m_name << endl;//````````````````````````````````````````````````````````````
-//
-//
-//		if (file_p == NULL or file_p->is_file() == false)
-//			return NULL;
-//		else
-//			return file_p;
-
-
 		File_Sys_Obj * file_p = get_p_from_children(filename);
 
 		if (file_p == NULL or file_p->is_file() == false)
 			return NULL;
 		else
 			return file_p;
-
 	}
 
 

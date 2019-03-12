@@ -16,7 +16,7 @@ using namespace std;
 
 const string ROOT_GROUP_NAME = "users";
 const string ROOT_USERNAME  = "root_user";
-const int GROUP_NAMES_PER_LINE = 3;
+const int GROUP_NAMES_PER_LINE = 5;
 
 
 
@@ -98,7 +98,6 @@ public:
 	// make new user and add it to ROOT_GROUP_NAME
 	void useradd (const string new_username) { useradd_G({ROOT_GROUP_NAME}, new_username); }
 
-	//test that after you switch user this still works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// add m_curr_username to given group
 	void usermod_a_G (const string group_name)
 	{
@@ -156,6 +155,25 @@ public:
 			m_curr_username = username;
 	}
 
+	//deletes user from given group
+	void userdel_G(const string group_name, const string username)
+	{
+		//check that group and user exist, and that user exists in given group if not, throw error
+		if      (group_exists(group_name) == false)
+			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": group does not exist";
+		else if (group_exists(group_name) == false)
+			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist";
+		else if (user_in_group(username, group_name) == false)
+			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist in group";
+		else
+		{
+			int g_pos = group_pos(group_name);
+			int u_pos = user_pos_in_group(username, group_name);
+
+			m_group_vec[g_pos].users_vec.erase(m_group_vec[g_pos].users_vec.begin() + u_pos); //erase user from group
+		}
+	}
+
 
 
 private:
@@ -190,6 +208,18 @@ private:
 		for(int i = 0 ; i < m_group_vec.size() ; i++)
 		{
 			if (m_group_vec[i].name == group_name)
+				return i;
+		}
+	}
+
+
+	int user_pos_in_group(const string username, const string group_name)
+	{
+		int g_pos = group_pos(group_name);
+
+		for (int i = 0 ; i < m_group_vec[g_pos].users_vec.size() ; i++)
+		{
+			if (m_group_vec[g_pos].users_vec[i] == username)
 				return i;
 		}
 	}

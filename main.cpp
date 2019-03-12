@@ -91,7 +91,18 @@ int main()
 			md.switchto("joe");
 			md.groups();
 
+			md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "bob");
+			md.switchto("bob");
+			md.groups();
+			md.print();
 
+			md.userdel_G("u3", "joe");
+			md.print();
+
+			md.userdel_G("u2", "bob");
+			md.groups();
+
+//			md.switchto("jo2");
 
 
 
