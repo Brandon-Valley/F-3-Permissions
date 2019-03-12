@@ -48,6 +48,7 @@ int main()
 {
 	//make membership database
 	Membership_Database md = Membership_Database();
+	md.print();
 
 	//root is the top level directory
 	Dir root = Dir(ROOT_M_NAME, md.m_curr_username, md.owning_group_name());
@@ -60,74 +61,76 @@ int main()
 
 
 	//testing
+
 	try
 	{
-		try
-		{
 
 
-			cout << md.m_group_vec.size() << endl;
+		cout << md.m_group_vec.size() << endl;
 
 
-			md.whoami();
-			md.print();
+		md.whoami();
+		md.print();
 
-			cur_dir->touch("f1"  , md.m_curr_username, md.owning_group_name());
-			cur_dir->mkdir("stan", md.m_curr_username, md.owning_group_name());
-			cur_dir->dot_slash("f1");
-		//	cur_dir->dot_slash("f2");
-		//	cur_dir->dot_slash("stan");
+		cur_dir->touch("f1"  , md.m_curr_username, md.owning_group_name());
+		cur_dir->mkdir("stan", md.m_curr_username, md.owning_group_name());
+		cur_dir->dot_slash("f1");
+	//	cur_dir->dot_slash("f2");
+	//	cur_dir->dot_slash("stan");
 
-			md.groupadd("u2");
-			md.groupadd("u3");
-			md.groupadd("u4");
-			md.groupadd("u5");
-			md.groups();
-			cout << "here" << endl;
+		md.groupadd("u2");
+		md.groupadd("u3");
+		md.groupadd("u4");
+		md.groupadd("u5");
+		md.groups();
+		cout << "here" << endl;
 
-			md.print();
+		md.print();
 
-			md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "joe");
-			md.print();
+		md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "joe");
+		md.print();
 
-			md.switchto("joe");
-			md.groups();
+		md.switchto("joe");
+		md.groups();
 
-			md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "bob");
-			md.switchto("bob");
-			md.groups();
-			md.print();
+		md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "bob");
+		md.switchto("bob");
+		md.groups();
+		md.print();
 
-			md.userdel_G("u3", "joe");
-			md.print();
+		md.userdel_G("u3", "joe");
+		md.print();
 
-			md.userdel_G("u2", "bob");
-			md.groups();
+//		md.userdel_G("u2", "bob");
+//		md.groups();
 
-			md.userdel("bob");
-			md.groups();
-			md.print();
+//		md.userdel("bob");
+//		md.groups();
+//		md.print();
 
 //			md.switchto("jo2");
 
-			cur_dir->ls_l();
+		cur_dir->ls_l();
 
-			cout << "SPACER" << endl;
-			//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			cur_dir->touch("file_1", md.m_curr_username, md.owning_group_name());
-			cur_dir->ls_l();
-			cur_dir->chown("joe", "file_1", md);
-			cur_dir->chgrp("u4", "file_1", md);
-			cur_dir->chown("joe", "stan", md);
-			cur_dir->chgrp("u4", "stan", md);
-			cout << "SPACER" << endl;
-			cur_dir->ls_l();
+		cout << "SPACER" << endl;
+		//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+		cout << "md.m_curr_username:  " << md.m_curr_username << endl;
+		cout << "md.owning_group_name():  " << md.owning_group_name() << endl;
+
+		cur_dir->touch("file_1", md.m_curr_username, md.owning_group_name());
+		cur_dir->ls_l();
+		cur_dir->chown("joe", "file_1", md);
+		cur_dir->chgrp("u4", "file_1", md);
+		cur_dir->chown("joe", "stan", md);
+		cur_dir->chgrp("u4", "stan", md);
+		cout << "SPACER" << endl;
+		cur_dir->ls_l();
 
 
-		}
-		catch (string error_msg) { cout << error_msg << endl; }
 	}
-	catch (...)   { cout << "ERROR" << endl; }
+	catch (string error_msg) { cout << error_msg << endl; }
+
 
 
 

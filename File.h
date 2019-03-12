@@ -25,8 +25,8 @@ public:
 		m_name = filename;
 		m_last_date_modified = currentDateTime();
 		m_file_sys_obj_type = "file";
-		m_owning_username = owning_username;
-		m_owning_group_name = owning_group_name;
+//		m_owning_username = owning_username;
+//		m_owning_group_name = owning_group_name;
 	}
 
 

@@ -83,9 +83,18 @@ public:
 	{
 		for (int i = 0 ; i < m_group_vec.size() ; i++)
 		{
+//			cout << "in owning_group_name, m_group_vec[i].name: " << m_group_vec[i].name << endl;//``````````````````
+//			cout << "in owning_group_name, m_curr_username: " << m_curr_username << endl;//``````````````````
+
 			if (user_in_group(m_curr_username, m_group_vec[i].name))
+			{
+//				cout << "in owning_group_name, about to return : " << m_group_vec[i].name << endl;//``````````````````
 				return m_group_vec[i].name;
+			}
+
 		}
+		cout << "in owning_group_name, about to return nothing" << endl;//`````````````````````````````````````
+		print(); //``````````````````````````````````````````````````````````````````````````````
 	}
 
 
@@ -183,6 +192,7 @@ public:
 			m_curr_username = username;
 	}
 
+	//need to make sure you cant delete root user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//deletes user from given group
 	void userdel_G(const string group_name, const string username)
 	{
@@ -193,6 +203,8 @@ public:
 			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist";
 		else if (user_in_group(username, group_name) == false)
 			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist in group";
+		else if (m_curr_username == username)
+			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": cannot delete current user";
 		else
 		{
 			int g_pos = group_pos(group_name);

@@ -287,6 +287,7 @@ public:
 	// if file already exists, update m_last_date_modified, if not, make new file
 	void touch(const string name, const string owning_username, const string owning_group_name)
 	{
+		cout << "in touch , owning_username: " << owning_username << endl;// "owning_group_name: " << owning_group_name << endl;//``````````````
 		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
 			if (m_child_p_vec[i]->m_name == name)
@@ -295,7 +296,11 @@ public:
 				return;
 			}
 		}
+
+		cout << "in touch" << endl;//``````````````````````````````````````````````````````````````
 		File *new_file = new File(name, owning_username, owning_group_name);
+
+		cout << "in touch, new_file->m_owning_username: " << new_file->m_owning_username << endl;//```````````````````````````````````````````````````
 		m_child_p_vec.push_back(new_file);
 	}
 
