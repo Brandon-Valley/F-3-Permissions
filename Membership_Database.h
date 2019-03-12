@@ -115,15 +115,7 @@ public:
 	//print out list of groups m_curr_username is member of
 	void groups()
 	{
-		vector<string> group_names_2_print = {};
-
-		//fill group_names_2_print
-		for (int i = 0 ; i < m_group_vec.size() ; i++)
-		{
-			if (user_in_group(m_curr_username, m_group_vec[i].name))
-				group_names_2_print.push_back(m_group_vec[i].name);
-		}
-
+		vector<string> group_names_2_print = groups_vec();
 
 		vector<string> output_vec;
 		string line;
@@ -173,6 +165,20 @@ public:
 			m_group_vec[g_pos].users_vec.erase(m_group_vec[g_pos].users_vec.begin() + u_pos); //erase user from group
 		}
 	}
+
+	//delets user from all groups
+	void userdel(const string username)
+	{
+		vector<string> group_names_2_del_user_from = groups_vec();
+
+		for (int i = 0 ; i < group_names_2_del_user_from.size() ; i++)
+		{
+//			int g_pos = group_pos(group_names_2_del_user_from[i]);
+			userdel_G(group_names_2_del_user_from[i], username);
+		}
+
+	}
+
 
 
 
@@ -238,6 +244,19 @@ private:
 	}
 
 
+	vector<string> groups_vec()
+	{
+		vector<string> group_names = {};
+
+		//fill group_names_2_print
+		for (int i = 0 ; i < m_group_vec.size() ; i++)
+		{
+			if (user_in_group(m_curr_username, m_group_vec[i].name))
+				group_names.push_back(m_group_vec[i].name);
+		}
+
+		return group_names;
+	}
 
 
 

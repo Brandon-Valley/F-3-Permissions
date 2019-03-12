@@ -102,6 +102,10 @@ int main()
 			md.userdel_G("u2", "bob");
 			md.groups();
 
+			md.userdel("bob");
+			md.groups();
+			md.print();
+
 //			md.switchto("jo2");
 
 
