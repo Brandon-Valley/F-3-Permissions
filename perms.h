@@ -51,7 +51,7 @@ string build_true_perm_str(const string perm_str, const string owning_username,
 	}
 
 
-	cout << "in biuld_true_perm_str, :" << owning_username << " ------ " << owning_group_name << endl;//````````````````````````
+	cout << "in biuld_true_perm_str, :" << md.m_curr_username << " ------ " << owning_group_name << endl;//````````````````````````
 	if (md.user_in_group(md.m_curr_username, owning_group_name))
 	{
 		cout << "correct group: " << owning_group_name << endl;//````````````````````````````````````````````````````````````````````
@@ -67,9 +67,13 @@ string build_true_perm_str(const string perm_str, const string owning_username,
 // returns true/false if user has perms
 bool user_has_perms(const char perm_type_char, const File_Sys_Obj * fso, Membership_Database md)
 {
+	// so ~Dir() has full perms to delete whatever it needs to for rm and rmdir
+	if (md.m_database_null == true)
+		return true;
+
 	cout << "in user has perms: " << fso->m_name << endl;//``````````````````````````````````````````````````````````````````````````
 	string true_perm_str = build_true_perm_str(fso->m_perm_str, fso->m_owning_username, fso->m_owning_group_name, md);
-	cout << "true_[erm_str: " << true_perm_str << endl;//111111111111111111111```````````````````````````
+	cout << "true_perm_str: " << true_perm_str << endl;//111111111111111111111```````````````````````````
 
 	if(true_perm_str.find(perm_type_char) != std::string::npos) //if perm_type_char in true_perm_str
 		return true;

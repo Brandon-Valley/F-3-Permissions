@@ -16,6 +16,7 @@ using namespace std;
 
 
 const string ROOT_M_NAME = "";
+const Membership_Database NULL_MEMBERSHIP_DATABASE = Membership_Database(true);
 
 
 
@@ -130,7 +131,7 @@ public:
 					if (m_child_p_vec[i]->is_dir())
 						dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name);
 					else
-						dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name);
+						dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE); //set m_database null = true to give full access to delete);
 				}
 
 				delete dir_2_delete;
@@ -138,7 +139,7 @@ public:
 				return;
 			}
 			else // if its a file
-				rm(m_child_p_vec[i]->m_name);
+				rm(m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
 		}
 	}
 
@@ -171,7 +172,7 @@ public:
 					if (m_child_p_vec[i]->is_dir())
 						dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name);
 					else
-						dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name);
+						dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
 				}
 
 				delete dir_2_delete;
@@ -184,18 +185,47 @@ public:
 
 
 	// removes file
-	void rm(const string file_name)
+	void rm(const string filename, Membership_Database md)
 	{
-		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+		File_Sys_Obj * file_p = get_file_p_from_children(filename);
+
+		if (file_p == NULL)
+			throw "rm: failed to remove " + filename + ":  No such file";
+		else
 		{
-			if (m_child_p_vec[i]->m_name == file_name and m_child_p_vec[i]->is_file())
+			if (user_has_perms('w', file_p, md) == false)
+				throw "rm: failed to remove " + filename + ":  Permission Denied";
+			else
 			{
-				delete m_child_p_vec[i];
-				m_child_p_vec.erase(m_child_p_vec.begin() + i);
-				return;
+				for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+				{
+					if (m_child_p_vec[i]->m_name == filename and m_child_p_vec[i]->is_file())
+					{
+						delete m_child_p_vec[i];
+						m_child_p_vec.erase(m_child_p_vec.begin() + i);
+						return;
+					}
+				}
 			}
 		}
-		throw "rm: failed to remove " + file_name + ":  No such file";
+
+
+
+//		if (user_has_perms('w', file_p, md))
+//			cout << filename << " executed!" << endl;
+//		else
+//			throw "./: cannot access " + filename + ": Permission Denied";
+//
+//		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+//		{
+//			if (m_child_p_vec[i]->m_name == filename and m_child_p_vec[i]->is_file())
+//			{
+//				delete m_child_p_vec[i];
+//				m_child_p_vec.erase(m_child_p_vec.begin() + i);
+//				return;
+//			}
+//		}
+//		throw "rm: failed to remove " + filename + ":  No such file";
 	}
 
 

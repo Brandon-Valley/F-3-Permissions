@@ -36,10 +36,12 @@ class Membership_Database
 public:
 	vector<group> m_group_vec = {};
 	string m_curr_username;
+	bool m_database_null; // used to give ~Dir() full access to delete whatever it wants
 
 	//assign defaults
-	Membership_Database()
+	Membership_Database(bool database_null = false)
 	{
+		m_database_null = database_null;
 		m_curr_username = ROOT_USERNAME;
 		groupadd(ROOT_GROUP_NAME);
 		useradd(ROOT_USERNAME);

@@ -29,7 +29,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
 	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "rmdir")  { cur_dir->rmdir(cv[1]); }
 	else if (cv.size() == 2 and   cv[0] == "touch")  { cur_dir->touch(cv[1], md); }
-	else if (cv.size() == 2 and   cv[0] == "rm")     { cur_dir->rm(cv[1]); }
+	else if (cv.size() == 2 and   cv[0] == "rm")     { cur_dir->rm   (cv[1], md); }
 
 	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(); }
 
@@ -146,15 +146,26 @@ int main()
 		cur_dir->ls_l();
 		cur_dir->dot_slash("f1", md);
 
+//		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+//		md.userdel_G("users", "joe");
+//		md.switchto("joe");
+//		md.print();
+//		cur_dir->chmod("f1", "654");
+//		cur_dir->ls_l();
+//		cout << "whoami: ";
+//		md.whoami();
+//		cur_dir->dot_slash("f1", md);
+
 		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-		md.userdel_G("users", "joe");
-		md.switchto("joe");
+//		md.userdel_G("users", "joe");
+		md.switchto("root_user");
 		md.print();
 		cur_dir->chmod("f1", "654");
 		cur_dir->ls_l();
 		cout << "whoami: ";
 		md.whoami();
-		cur_dir->dot_slash("f1", md);
+		cur_dir->rm("f1", md);
+		cur_dir->ls_l();
 
 
 	}
