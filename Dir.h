@@ -283,7 +283,7 @@ public:
 		//fill output_vec
 		for(int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
-			if(user_has_perms('r', m_child_p_vec[i], md))
+			if(user_has_perms('r', m_child_p_vec[i], md)) // if current child has read permissions
 			{
 				if(i % 5 != 0 or i == 0)
 					line += m_child_p_vec[i]->m_name + "\t";
@@ -303,15 +303,18 @@ public:
 
 
 	//list all files and dir's in directory with all info
-	void ls_l()
+	void ls_l(Membership_Database md)
 	{
 		for(int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
-			cout << m_child_p_vec[i]->m_perm_str << "\t" << m_child_p_vec[i]->m_owning_username << "\t" << m_child_p_vec[i]->m_owning_group_name << "\t" << m_child_p_vec[i]->m_size << "\t" << m_child_p_vec[i]->m_last_date_modified << "\t" << m_child_p_vec[i]->m_name;
+			if(user_has_perms('r', m_child_p_vec[i], md)) // if current child has read permissions
+			{
+				cout << m_child_p_vec[i]->m_perm_str << "\t" << m_child_p_vec[i]->m_owning_username << "\t" << m_child_p_vec[i]->m_owning_group_name << "\t" << m_child_p_vec[i]->m_size << "\t" << m_child_p_vec[i]->m_last_date_modified << "\t" << m_child_p_vec[i]->m_name;
 
-			if (m_child_p_vec[i]->is_dir() == true)
-				cout << "/";
-			cout << endl;
+				if (m_child_p_vec[i]->is_dir() == true)
+					cout << "/";
+				cout << endl;
+			}
 		}
 
 	}

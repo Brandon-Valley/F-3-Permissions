@@ -46,15 +46,15 @@ string build_true_perm_str(const string perm_str, const string owning_username,
 
 	if (owning_username == md.m_curr_username)
 	{
-		cout << "correct owner: " << owning_username << endl;//`````````````````````````````````````````````````
+//		cout << "correct owner: " << owning_username << endl;//`````````````````````````````````````````````````
 		true_perm_str = or_perm_strings(true_perm_str, owner_perms(perm_str));
 	}
 
 
-	cout << "in biuld_true_perm_str, :" << md.m_curr_username << " ------ " << owning_group_name << endl;//````````````````````````
+//	cout << "in biuld_true_perm_str, :" << md.m_curr_username << " ------ " << owning_group_name << endl;//````````````````````````
 	if (md.user_in_group(md.m_curr_username, owning_group_name))
 	{
-		cout << "correct group: " << owning_group_name << endl;//````````````````````````````````````````````````````````````````````
+//		cout << "correct group: " << owning_group_name << endl;//````````````````````````````````````````````````````````````````````
 		true_perm_str = or_perm_strings(true_perm_str, group_perms(perm_str));
 	}
 
@@ -71,7 +71,7 @@ bool user_has_perms(const char perm_type_char, const File_Sys_Obj * fso, Members
 	if (md.m_database_null == true)
 		return true;
 
-	cout << "in user has perms: " << fso->m_name << endl;//``````````````````````````````````````````````````````````````````````````
+//	cout << "in user has perms: " << fso->m_name << endl;//``````````````````````````````````````````````````````````````````````````
 	string true_perm_str = build_true_perm_str(fso->m_perm_str, fso->m_owning_username, fso->m_owning_group_name, md);
 	cout << "true_perm_str: " << true_perm_str << endl;//111111111111111111111```````````````````````````
 

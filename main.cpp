@@ -31,7 +31,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
 	else if (cv.size() == 2 and   cv[0] == "touch")  {        cur_dir->touch(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "rm")     {        cur_dir->rm   (cv[1], md); }
 
-	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(); }
+	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(md); }
 
 	else if (cv.size() == 3 and   cv[0] == "chmod")                { cur_dir->chmod(cv[2], cv[1]); }
 
@@ -73,7 +73,7 @@ int main()
 		md.print();
 
 		cur_dir->touch("f1"  , md);
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 
 		cur_dir->mkdir("stan", md);
 		cur_dir->dot_slash("f1", md);
@@ -112,7 +112,7 @@ int main()
 
 //			md.switchto("jo2");
 
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 
 		cout << "SPACER" << endl;
 		//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -121,13 +121,13 @@ int main()
 		cout << "md.owning_group_name():  " << md.owning_group_name() << endl;
 
 		cur_dir->touch("file_1", md);
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 		cur_dir->chown("joe", "file_1", md);
 		cur_dir->chgrp("u4", "file_1", md);
 		cur_dir->chown("joe", "stan", md);
 		cur_dir->chgrp("u4", "stan", md);
 		cout << "SPACER" << endl;
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 
 		cur_dir->dot_slash("f1", md);
 
@@ -135,7 +135,7 @@ int main()
 		md.print();
 		md.whoami();
 		cur_dir->chmod("f1", "654");
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 		cur_dir->dot_slash("f1", md);
 
 		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
@@ -143,7 +143,7 @@ int main()
 		md.print();
 		md.whoami();
 		cur_dir->chmod("f1", "654");
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 		cur_dir->dot_slash("f1", md);
 
 //		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
@@ -151,7 +151,7 @@ int main()
 //		md.switchto("joe");
 //		md.print();
 //		cur_dir->chmod("f1", "654");
-//		cur_dir->ls_l();
+//		cur_dir->ls_l(md);
 //		cout << "whoami: ";
 //		md.whoami();
 //		cur_dir->dot_slash("f1", md);
@@ -161,11 +161,11 @@ int main()
 		md.switchto("root_user");
 		md.print();
 		cur_dir->chmod("f1", "654");
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 		cout << "whoami: ";
 		md.whoami();
 		cur_dir->rm("f1", md);
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 //		cur_dir->rm("stan", md);
 
 		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
@@ -173,25 +173,41 @@ int main()
 		md.switchto("joe");
 		md.print();
 		cur_dir->chmod("stan", "654");
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 		cout << "whoami: ";
 		md.whoami();
 		cur_dir->rmdir("stan", md);
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
+
+//		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+//		md.userdel_G("users", "bob");
+//		cur_dir->mkdir("d3", md);
+//		cur_dir->touch("f3", md);
+//		cur_dir->ls_l(md);
+//		md.switchto("joe");
+//		md.print();
+//		cur_dir->chmod("d3", "052");
+//		cur_dir->chmod("f3", "052");
+//		cur_dir->ls_l(md);
+//		cout << "whoami: ";
+//		md.whoami();
+//		cur_dir->ls(md);
 
 		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+		md.switchto("root_user");
 		md.userdel_G("users", "bob");
 		cur_dir->mkdir("d3", md);
 		cur_dir->touch("f3", md);
-		cur_dir->ls_l();
+		cur_dir->ls_l(md);
 		md.switchto("joe");
 		md.print();
 		cur_dir->chmod("d3", "052");
 		cur_dir->chmod("f3", "052");
-		cur_dir->ls_l();
+//		cur_dir->ls_l(md);
 		cout << "whoami: ";
 		md.whoami();
-		cur_dir->ls(md);
+		cout << "  FINAL LS_L() VVV" << endl;
+		cur_dir->ls_l(md);
 
 
 	}
