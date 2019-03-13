@@ -25,11 +25,11 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
 	else if (cv.size() == 1 and   cv[0].rfind("./", 0) == 0)    { dp_cur_dir->dot_slash(cv[0].substr(2), md); } // if ./ at beginning of str, do dot_slash on str[2:-1]
 
 
-	else if (cv.size() == 2 and   cv[0] == "cd")     { return cur_dir->cd(cv[1]); }
-	else if (cv.size() == 2 and   cv[0] == "mkdir")  { cur_dir->mkdir(cv[1], md); }
-	else if (cv.size() == 2 and   cv[0] == "rmdir")  { cur_dir->rmdir(cv[1]); }
-	else if (cv.size() == 2 and   cv[0] == "touch")  { cur_dir->touch(cv[1], md); }
-	else if (cv.size() == 2 and   cv[0] == "rm")     { cur_dir->rm   (cv[1], md); }
+	else if (cv.size() == 2 and   cv[0] == "cd")     { return cur_dir->cd   (cv[1]); }
+	else if (cv.size() == 2 and   cv[0] == "mkdir")  {        cur_dir->mkdir(cv[1], md); }
+	else if (cv.size() == 2 and   cv[0] == "rmdir")  {        cur_dir->rmdir(cv[1], md); }
+	else if (cv.size() == 2 and   cv[0] == "touch")  {        cur_dir->touch(cv[1], md); }
+	else if (cv.size() == 2 and   cv[0] == "rm")     {        cur_dir->rm   (cv[1], md); }
 
 	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(); }
 
@@ -165,6 +165,18 @@ int main()
 		cout << "whoami: ";
 		md.whoami();
 		cur_dir->rm("f1", md);
+		cur_dir->ls_l();
+//		cur_dir->rm("stan", md);
+
+		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+//		md.userdel_G("users", "joe");
+		md.switchto("joe");
+		md.print();
+		cur_dir->chmod("stan", "654");
+		cur_dir->ls_l();
+		cout << "whoami: ";
+		md.whoami();
+		cur_dir->rmdir("stan", md);
 		cur_dir->ls_l();
 
 

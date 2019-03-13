@@ -88,6 +88,16 @@ private:
 	}
 
 
+	File_Sys_Obj * get_dir_p_from_children(string dir_name)
+	{
+		File_Sys_Obj * dir_p = get_p_from_children(dir_name);
+
+		if (dir_p == NULL or dir_p->is_dir() == false)
+			return NULL;
+		else
+			return dir_p;
+	}
+
 
 	File_Sys_Obj * get_file_p_from_children(string filename)
 	{
@@ -129,7 +139,7 @@ public:
 				for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
 				{
 					if (m_child_p_vec[i]->is_dir())
-						dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name);
+						dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
 					else
 						dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE); //set m_database null = true to give full access to delete);
 				}
@@ -159,28 +169,61 @@ public:
 
 
 	// removes directory and it's children
-	void rmdir(const string dir_name)
+	void rmdir(const string dir_name, Membership_Database md)
 	{
-		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+		File_Sys_Obj * dir_p = get_dir_p_from_children(dir_name);
+
+		if (dir_p == NULL)
+			throw "rmdir: failed to remove " + dir_name + ":  No such directory";
+		else
 		{
-			if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
+			if (user_has_perms('w', dir_p, md) == false)
+				throw "rmdir: failed to remove " + dir_name + ":  Permission Denied";
+			else
 			{
-				Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
-
-				for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
+				for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 				{
-					if (m_child_p_vec[i]->is_dir())
-						dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name);
-					else
-						dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
-				}
+					if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
+					{
+						Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
 
-				delete dir_2_delete;
-				m_child_p_vec.erase(m_child_p_vec.begin() + i);
-				return;
+						for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
+						{
+							if (m_child_p_vec[i]->is_dir())
+								dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
+							else
+								dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
+						}
+
+						delete dir_2_delete;
+						m_child_p_vec.erase(m_child_p_vec.begin() + i);
+						return;
+					}
+				}
 			}
+
+
+//			for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+//			{
+//				if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
+//				{
+//					Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
+//
+//					for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
+//					{
+//						if (m_child_p_vec[i]->is_dir())
+//							dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name);
+//						else
+//							dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
+//					}
+//
+//					delete dir_2_delete;
+//					m_child_p_vec.erase(m_child_p_vec.begin() + i);
+//					return;
+//				}
+//			}
+//			throw "rmdir: failed to remove " + dir_name + ":  No such directory";
 		}
-		throw "rmdir: failed to remove " + dir_name + ":  No such directory";
 	}
 
 
