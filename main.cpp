@@ -73,6 +73,8 @@ int main()
 		md.print();
 
 		cur_dir->touch("f1"  , md);
+		cur_dir->ls_l();
+
 		cur_dir->mkdir("stan", md);
 		cur_dir->dot_slash("f1", md);
 	//	cur_dir->dot_slash("f2");
@@ -127,6 +129,31 @@ int main()
 		cout << "SPACER" << endl;
 		cur_dir->ls_l();
 
+		cur_dir->dot_slash("f1", md);
+
+		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+		md.print();
+		md.whoami();
+		cur_dir->chmod("f1", "654");
+		cur_dir->ls_l();
+		cur_dir->dot_slash("f1", md);
+
+		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+		md.switchto("root_user");
+		md.print();
+		md.whoami();
+		cur_dir->chmod("f1", "654");
+		cur_dir->ls_l();
+		cur_dir->dot_slash("f1", md);
+
+		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+		md.userdel_G("users", "joe");
+		md.switchto("joe");
+		md.print();
+		cur_dir->chmod("f1", "654");
+		cur_dir->ls_l();
+		cout << "whoami: ";
+		md.whoami();
 		cur_dir->dot_slash("f1", md);
 
 

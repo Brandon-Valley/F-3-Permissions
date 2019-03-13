@@ -296,6 +296,7 @@ public:
 				return;
 			}
 		}
+		cout << "in touch, md.m_curr_username, md.owning_group_name():  " << md.m_curr_username << "  ,  " << md.owning_group_name() << endl; //`````````
 
 		File *new_file = new File(name, md.m_curr_username, md.owning_group_name());
 
@@ -332,6 +333,8 @@ public:
 		{
 			if (user_has_perms('x', file_p, md))
 				cout << filename << " executed!" << endl;
+			else
+				throw "./: cannot access " + filename + ": Permission Denied";
 		}
 	}
 
