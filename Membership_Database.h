@@ -202,6 +202,8 @@ public:
 	{
 		if (user_exists(username) == false)
 			throw "switchto: Could not switch to user " + username + ": user does not exist";
+//		else if (m_curr_username == username)
+//			throw "switchto: " + username + " is already the current user";
 		else
 			m_curr_username = username;
 	}

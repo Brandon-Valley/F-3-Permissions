@@ -56,6 +56,8 @@ const Membership_Database NULL_MEMBERSHIP_DATABASE = Membership_Database(true);
 // should you be able to cd into the directory even though you cant see it?  And if yes, should you then be able to see all
 // the files within the directory with ls?
 
+// should it say something if you try to switchto() to the current user?
+
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //fix error msg from last time
 
@@ -273,7 +275,7 @@ public:
 
 
 	//lists all dirs and files in current dir
-	void ls()
+	void ls(Membership_Database md)
 	{
 		vector<string> output_vec;
 		string line;
@@ -281,12 +283,15 @@ public:
 		//fill output_vec
 		for(int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
-			if(i % 5 != 0 or i == 0)
-				line += m_child_p_vec[i]->m_name + "\t";
-			else
+			if(user_has_perms('r', m_child_p_vec[i], md))
 			{
-				output_vec.push_back(line);
-				line = m_child_p_vec[i]->m_name + "\t";
+				if(i % 5 != 0 or i == 0)
+					line += m_child_p_vec[i]->m_name + "\t";
+				else
+				{
+					output_vec.push_back(line);
+					line = m_child_p_vec[i]->m_name + "\t";
+				}
 			}
 		}
 		output_vec.push_back(line);

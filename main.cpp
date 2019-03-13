@@ -20,7 +20,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
 	if      (cv.size() == 1 and   cv[0] == "quit")  { exit(0); } //command to stop loop
 	else if (cv.size() == 1 and   cv[0] == "exit")  { exit(0); } //command to stop loop
 	else if (cv.size() == 1 and   cv[0] == "pwd")   { cout << dp_cur_dir->pwd() << endl; }
-	else if (cv.size() == 1 and   cv[0] == "ls")    { dp_cur_dir->ls(); }
+	else if (cv.size() == 1 and   cv[0] == "ls")    { dp_cur_dir->ls(md); }
 
 	else if (cv.size() == 1 and   cv[0].rfind("./", 0) == 0)    { dp_cur_dir->dot_slash(cv[0].substr(2), md); } // if ./ at beginning of str, do dot_slash on str[2:-1]
 
@@ -178,6 +178,20 @@ int main()
 		md.whoami();
 		cur_dir->rmdir("stan", md);
 		cur_dir->ls_l();
+
+		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+		md.userdel_G("users", "bob");
+		cur_dir->mkdir("d3", md);
+		cur_dir->touch("f3", md);
+		cur_dir->ls_l();
+		md.switchto("joe");
+		md.print();
+		cur_dir->chmod("d3", "052");
+		cur_dir->chmod("f3", "052");
+		cur_dir->ls_l();
+		cout << "whoami: ";
+		md.whoami();
+		cur_dir->ls(md);
 
 
 	}
