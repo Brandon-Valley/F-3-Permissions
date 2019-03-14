@@ -62,124 +62,139 @@ int main()
 
 	//testing
 
-	try
-	{
-
-
-		cout << md.m_group_vec.size() << endl;
-
-
-		md.whoami();
-		md.print();
-
-		cur_dir->touch("f1"  , md);
-		cur_dir->ls_l(md);
-
-		cur_dir->mkdir("stan", md);
-		cur_dir->dot_slash("f1", md);
-	//	cur_dir->dot_slash("f2");
-	//	cur_dir->dot_slash("stan");
-
-		md.groupadd("u2");
-		md.groupadd("u3");
-		md.groupadd("u4");
-		md.groupadd("u5");
-		md.groups();
-		cout << "here" << endl;
-
-		md.print();
-
-		md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "joe");
-		md.print();
-
-		md.switchto("joe");
-		md.groups();
-
-		md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "bob");
-		md.switchto("bob");
-		md.groups();
-		md.print();
-
-		md.userdel_G("u3", "joe");
-		md.print();
-
-//		md.userdel_G("u2", "bob");
+//	try
+//	{
+//
+//
+//		cout << md.m_group_vec.size() << endl;
+//
+//
+//		md.whoami();
+//		md.print();
+//
+//		cur_dir->touch("f1"  , md);
+//		cur_dir->ls_l(md);
+//
+//		cur_dir->mkdir("stan", md);
+//		cur_dir->dot_slash("f1", md);
+//	//	cur_dir->dot_slash("f2");
+//	//	cur_dir->dot_slash("stan");
+//
+//		md.groupadd("u2");
+//		md.groupadd("u3");
+//		md.groupadd("u4");
+//		md.groupadd("u5");
 //		md.groups();
-
-//		md.userdel("bob");
+//		cout << "here" << endl;
+//
+//		md.print();
+//
+//		md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "joe");
+//		md.print();
+//
+//		md.switchto("joe");
+//		md.groups();
+//
+//		md.useradd_G({"users", "u2", "u3", "u4", "u5"}, "bob");
+//		md.switchto("bob");
 //		md.groups();
 //		md.print();
-
-//			md.switchto("jo2");
-
-		cur_dir->ls_l(md);
-
-		cout << "SPACER" << endl;
-		//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-		cout << "md.m_curr_username:  " << md.m_curr_username << endl;
-		cout << "md.owning_group_name():  " << md.owning_group_name() << endl;
-
-		cur_dir->touch("file_1", md);
-		cur_dir->ls_l(md);
-		cur_dir->chown("joe", "file_1", md);
-		cur_dir->chgrp("u4", "file_1", md);
-		cur_dir->chown("joe", "stan", md);
-		cur_dir->chgrp("u4", "stan", md);
-		cout << "SPACER" << endl;
-		cur_dir->ls_l(md);
-
-		cur_dir->dot_slash("f1", md);
-
-		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-		md.print();
-		md.whoami();
-		cur_dir->chmod("f1", "654");
-		cur_dir->ls_l(md);
-		cur_dir->dot_slash("f1", md);
-
-		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-		md.switchto("root_user");
-		md.print();
-		md.whoami();
-		cur_dir->chmod("f1", "654");
-		cur_dir->ls_l(md);
-		cur_dir->dot_slash("f1", md);
-
+//
+//		md.userdel_G("u3", "joe");
+//		md.print();
+//
+////		md.userdel_G("u2", "bob");
+////		md.groups();
+//
+////		md.userdel("bob");
+////		md.groups();
+////		md.print();
+//
+////			md.switchto("jo2");
+//
+//		cur_dir->ls_l(md);
+//
+//		cout << "SPACER" << endl;
+//		//make user own file when make it !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+//		cout << "md.m_curr_username:  " << md.m_curr_username << endl;
+//		cout << "md.owning_group_name():  " << md.owning_group_name() << endl;
+//
+//		cur_dir->touch("file_1", md);
+//		cur_dir->ls_l(md);
+//		cur_dir->chown("joe", "file_1", md);
+//		cur_dir->chgrp("u4", "file_1", md);
+//		cur_dir->chown("joe", "stan", md);
+//		cur_dir->chgrp("u4", "stan", md);
+//		cout << "SPACER" << endl;
+//		cur_dir->ls_l(md);
+//
+//		cur_dir->dot_slash("f1", md);
+//
 //		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-//		md.userdel_G("users", "joe");
-//		md.switchto("joe");
+//		md.print();
+//		md.whoami();
+//		cur_dir->chmod("f1", "654");
+//		cur_dir->ls_l(md);
+//		cur_dir->dot_slash("f1", md);
+//
+//		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+//		md.switchto("root_user");
+//		md.print();
+//		md.whoami();
+//		cur_dir->chmod("f1", "654");
+//		cur_dir->ls_l(md);
+//		cur_dir->dot_slash("f1", md);
+//
+////		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+////		md.userdel_G("users", "joe");
+////		md.switchto("joe");
+////		md.print();
+////		cur_dir->chmod("f1", "654");
+////		cur_dir->ls_l(md);
+////		cout << "whoami: ";
+////		md.whoami();
+////		cur_dir->dot_slash("f1", md);
+//
+//		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+////		md.userdel_G("users", "joe");
+//		md.switchto("root_user");
 //		md.print();
 //		cur_dir->chmod("f1", "654");
 //		cur_dir->ls_l(md);
 //		cout << "whoami: ";
 //		md.whoami();
-//		cur_dir->dot_slash("f1", md);
-
-		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-//		md.userdel_G("users", "joe");
-		md.switchto("root_user");
-		md.print();
-		cur_dir->chmod("f1", "654");
-		cur_dir->ls_l(md);
-		cout << "whoami: ";
-		md.whoami();
-		cur_dir->rm("f1", md);
-		cur_dir->ls_l(md);
-//		cur_dir->rm("stan", md);
-
-		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-//		md.userdel_G("users", "joe");
-		md.switchto("joe");
-		md.print();
-		cur_dir->chmod("stan", "654");
-		cur_dir->ls_l(md);
-		cout << "whoami: ";
-		md.whoami();
-		cur_dir->rmdir("stan", md);
-		cur_dir->ls_l(md);
-
+//		cur_dir->rm("f1", md);
+//		cur_dir->ls_l(md);
+////		cur_dir->rm("stan", md);
+//
 //		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+////		md.userdel_G("users", "joe");
+//		md.switchto("joe");
+//		md.print();
+//		cur_dir->chmod("stan", "654");
+//		cur_dir->ls_l(md);
+//		cout << "whoami: ";
+//		md.whoami();
+//		cur_dir->rmdir("stan", md);
+//		cur_dir->ls_l(md);
+//
+////		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+////		md.userdel_G("users", "bob");
+////		cur_dir->mkdir("d3", md);
+////		cur_dir->touch("f3", md);
+////		cur_dir->ls_l(md);
+////		md.switchto("joe");
+////		md.print();
+////		cur_dir->chmod("d3", "052");
+////		cur_dir->chmod("f3", "052");
+////		cur_dir->ls_l(md);
+////		cout << "whoami: ";
+////		md.whoami();
+////		cur_dir->ls(md);
+//
+//		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+//		md.switchto("root_user");
 //		md.userdel_G("users", "bob");
 //		cur_dir->mkdir("d3", md);
 //		cur_dir->touch("f3", md);
@@ -188,48 +203,33 @@ int main()
 //		md.print();
 //		cur_dir->chmod("d3", "052");
 //		cur_dir->chmod("f3", "052");
-//		cur_dir->ls_l(md);
+////		cur_dir->ls_l(md);
 //		cout << "whoami: ";
 //		md.whoami();
-//		cur_dir->ls(md);
-
-		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-		md.switchto("root_user");
-		md.userdel_G("users", "bob");
-		cur_dir->mkdir("d3", md);
-		cur_dir->touch("f3", md);
-		cur_dir->ls_l(md);
-		md.switchto("joe");
-		md.print();
-		cur_dir->chmod("d3", "052");
-		cur_dir->chmod("f3", "052");
+//		cout << "  FINAL LS_L() VVV" << endl;
 //		cur_dir->ls_l(md);
-		cout << "whoami: ";
-		md.whoami();
-		cout << "  FINAL LS_L() VVV" << endl;
-		cur_dir->ls_l(md);
-
-		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
-		cur_dir->mkdir("wow", md);
-		cur_dir->touch("lol", md);
-		cur_dir->cd("wow");
-//		cur_dir->ls(md);
+//
+//		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
 //		cur_dir->mkdir("wow", md);
-//		cur_dir->cd("..");
-		cur_dir->cd("wow");
+//		cur_dir->touch("lol", md);
+//		cur_dir->cd("wow");
+////		cur_dir->ls(md);
+////		cur_dir->mkdir("wow", md);
+////		cur_dir->cd("..");
+//		cur_dir->cd("wow");
+////		cur_dir->rm("wow", md);
+//		cur_dir->rmdir("wow", md);
+////		cur_dir->cd("..");
+//		cur_dir->touch("wow", md);
+//		cur_dir->touch("lol", md);
+////		cur_dir->rmdir("lol", md);
 //		cur_dir->rm("wow", md);
-		cur_dir->rmdir("wow", md);
-//		cur_dir->cd("..");
-		cur_dir->touch("wow", md);
-		cur_dir->touch("lol", md);
-//		cur_dir->rmdir("lol", md);
-		cur_dir->rm("wow", md);
-		cur_dir->rm("lol", md);
-
-
-
-	}
-	catch (string error_msg) { cout << error_msg << endl; }
+//		cur_dir->rm("lol", md);
+//
+//
+//
+//	}
+//	catch (string error_msg) { cout << error_msg << endl; }
 
 
 
@@ -239,22 +239,22 @@ int main()
 //	cout << cur_dir->owner_perm_str() << endl;
 
 
-//	while (true)
-//	{
-//		try
-//		{
-//			try
-//			{
-//				cout << cur_dir->pwd() << "  >> ";
-//				string command;
-//				getline(cin, command);
-////				cout << " !!!DELETE THIS!!! command recieved:  " << command << endl;//`````````````````````````````````````````````````````````````````````````````
-//				cur_dir = parse(command, cur_dir);
-//			}
-//			catch (string error_msg) { cout << error_msg << endl; }
-//		}
-//		catch (...)   { cout << "ERROR" << endl; }
-//	}
+	while (true)
+	{
+		try
+		{
+			try
+			{
+				cout << cur_dir->pwd() << "  >> ";
+				string command;
+				getline(cin, command);
+//				cout << " !!!DELETE THIS!!! command recieved:  " << command << endl;//`````````````````````````````````````````````````````````````````````````````
+				cur_dir = parse(command, cur_dir, md);
+			}
+			catch (string error_msg) { cout << error_msg << endl; }
+		}
+		catch (...)   { cout << "ERROR" << endl; }
+	}
 	exit(0);
 	return 0;
 }

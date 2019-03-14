@@ -129,33 +129,35 @@ public:
 
 	// test that you cant have empty group names and that it doesnt work if you use a grop name that doesnt exist !!!!!!!!!!
 	// make new user and add it to all groups given in vec
-	void useradd_G (const vector<string> group_names_vec, const string new_username)
-	{
-		if (user_exists(new_username))
-			throw "useradd: Could not add user " + new_username + ": user already exists";
-		else
+	void useradd_G (const string group_names_str, const string new_username)
 		{
-			//check if all groups from vec exist
-			for (int i = 0 ; i < group_names_vec.size() ; i++)
+			vector<string> group_names_vec = split(group_names_str, ",");
+
+			if (user_exists(new_username))
+				throw "useradd: Could not add user " + new_username + ": user already exists";
+			else
 			{
-				if (group_exists(group_names_vec[i]) == false)
+				//check if all groups from vec exist
+				for (int i = 0 ; i < group_names_vec.size() ; i++)
 				{
-					throw "useradd: could not add user " + new_username + " one or more of the given groups do not exist";
-					return;
+					if (group_exists(group_names_vec[i]) == false)
+					{
+						throw "useradd: could not add user " + new_username + " one or more of the given groups do not exist";
+						return;
+					}
+				}
+
+				//continue if all groups exist, add new_username to all groups in vec
+				for (int i = 0 ; i < group_names_vec.size() ; i++)
+				{
+					int g_pos = group_pos(group_names_vec[i]);
+					m_group_vec[g_pos].users_vec.push_back(new_username);
 				}
 			}
-
-			//continue if all groups exist, add new_username to all groups in vec
-			for (int i = 0 ; i < group_names_vec.size() ; i++)
-			{
-				int g_pos = group_pos(group_names_vec[i]);
-				m_group_vec[g_pos].users_vec.push_back(new_username);
-			}
 		}
-	}
 
 	// make new user and add it to ROOT_GROUP_NAME
-	void useradd (const string new_username) { useradd_G({ROOT_GROUP_NAME}, new_username); }
+	void useradd (const string new_username) { useradd_G(ROOT_GROUP_NAME, new_username); }
 
 	// add m_curr_username to given group
 	void usermod_a_G (const string group_name)
