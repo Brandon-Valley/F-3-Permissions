@@ -209,6 +209,24 @@ int main()
 		cout << "  FINAL LS_L() VVV" << endl;
 		cur_dir->ls_l(md);
 
+		cout << "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''" << endl;
+		cur_dir->mkdir("wow", md);
+		cur_dir->touch("lol", md);
+		cur_dir->cd("wow");
+//		cur_dir->ls(md);
+//		cur_dir->mkdir("wow", md);
+//		cur_dir->cd("..");
+		cur_dir->cd("wow");
+//		cur_dir->rm("wow", md);
+		cur_dir->rmdir("wow", md);
+//		cur_dir->cd("..");
+		cur_dir->touch("wow", md);
+		cur_dir->touch("lol", md);
+//		cur_dir->rmdir("lol", md);
+		cur_dir->rm("wow", md);
+		cur_dir->rm("lol", md);
+
+
 
 	}
 	catch (string error_msg) { cout << error_msg << endl; }

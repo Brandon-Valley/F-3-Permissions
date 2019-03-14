@@ -160,7 +160,7 @@ public:
 	void mkdir(const string new_dir_name, Membership_Database md)
 	{
 		if (in_children(new_dir_name) == true)
-			throw "mkdir: cannot create directory ‘" + new_dir_name + "’: File exists";
+			throw "mkdir: cannot create directory ‘" + new_dir_name + "’: Directory already exists";
 		else
 		{
 			Dir * new_dir = new Dir(new_dir_name, md.m_curr_username, md.owning_group_name());
@@ -176,7 +176,7 @@ public:
 		File_Sys_Obj * dir_p = get_dir_p_from_children(dir_name);
 
 		if (dir_p == NULL)
-			throw "rmdir: failed to remove " + dir_name + ":  No such directory";
+			throw "rmdir: failed: No such directory";
 		else
 		{
 			if (user_has_perms('w', dir_p, md) == false)
@@ -326,7 +326,12 @@ public:
 		if (dir_name == "..")
 		{
 			if (m_is_root == true)
+			{
 				throw "cd: invalid input"; //this wont print, it will just say ERROR b/c its not returning anything but thats fine, im lazy
+				File_Sys_Obj * cur_fso_p = m_parent_dir_p->get_dir_p_from_children(m_name);
+				return static_cast<Dir*>(cur_fso_p);
+//				return *this;
+			}
 			else
 				return m_parent_dir_p;
 		}
