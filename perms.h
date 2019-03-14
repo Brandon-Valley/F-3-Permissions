@@ -73,7 +73,7 @@ bool user_has_perms(const char perm_type_char, const File_Sys_Obj * fso, Members
 
 //	cout << "in user has perms: " << fso->m_name << endl;//``````````````````````````````````````````````````````````````````````````
 	string true_perm_str = build_true_perm_str(fso->m_perm_str, fso->m_owning_username, fso->m_owning_group_name, md);
-	cout << "true_perm_str: " << true_perm_str << endl;//111111111111111111111```````````````````````````
+//	cout << "true_perm_str: " << true_perm_str << endl;//111111111111111111111```````````````````````````
 
 	if(true_perm_str.find(perm_type_char) != std::string::npos) //if perm_type_char in true_perm_str
 		return true;

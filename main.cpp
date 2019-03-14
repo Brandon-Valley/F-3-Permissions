@@ -48,7 +48,7 @@ int main()
 {
 	//make membership database
 	Membership_Database md = Membership_Database();
-	md.print();
+//	md.print();
 
 	//root is the top level directory
 	Dir root = Dir(ROOT_M_NAME, md.m_curr_username, md.owning_group_name());
@@ -248,7 +248,10 @@ int main()
 				cout << cur_dir->pwd() << "  >> ";
 				string command;
 				getline(cin, command);
-//				cout << " !!!DELETE THIS!!! command recieved:  " << command << endl;//`````````````````````````````````````````````````````````````````````````````
+
+				md.print() ; //remove~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 				cur_dir = parse(command, cur_dir, md);
 			}
 			catch (string error_msg) { cout << error_msg << endl; }
