@@ -10,11 +10,13 @@ using namespace std;
 
 
 //parses input commands
-Dir * parse(const string command, Dir * cur_dir, Membership_Database md)
+Dir * parse(const string command, Dir * cur_dir, Membership_Database & md)
 {
 	Dir * dp_cur_dir = static_cast<Dir*>(cur_dir);
 
-	vector<string> cv = split(command);
+	vector<string> cv = split(command, " ");
+
+	cout << "cv: " << str_vec_2_str(cv) << endl;//``````````````````````````````````````````````````````````````````````````
 
 
 	if      (cv.size() == 1 and   cv[0] == "quit")  { exit(0); } //command to stop loop
@@ -247,7 +249,7 @@ int main()
 
 
 
-
+//	cout << split("users", ",")[1] << endl;
 
 
 //	cout << cur_dir->owner_perm_str() << endl;
@@ -259,13 +261,11 @@ int main()
 		{
 			try
 			{
+				md.print() ; //remove~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 				cout << cur_dir->pwd() << "  >> ";
 				string command;
 				getline(cin, command);
-
-				md.print() ; //remove~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
 				cur_dir = parse(command, cur_dir, md);
 			}
 			catch (string error_msg) { cout << error_msg << endl; }

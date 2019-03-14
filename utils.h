@@ -101,6 +101,10 @@ string currentDateTime()
 //splits string into vector of strings using space as delim.
 vector<string> split(string str, string token = " ")
 {
+//	//if str does not contain token, return str
+//	if (str.find(token) != std::string::npos)
+//		return {str};
+
     vector<string>result;
     while(str.size()){
         int index = str.find(token);
@@ -123,9 +127,12 @@ string str_vec_2_str(vector<string> str_vec)
 
 	for (int i = 0 ; i < str_vec.size(); i++)
 	{
-		ret_str += str_vec[i] + " ";
+		ret_str += str_vec[i];
+
+		if (i < str_vec.size() - 1)
+			ret_str += ", ";
 	}
-	ret_str += "]";
+	ret_str += " ]";
 
 	return ret_str;
 }
