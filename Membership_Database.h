@@ -176,7 +176,7 @@ public:
 	//print out list of groups m_curr_username is member of
 	void groups()
 	{
-		vector<string> group_names_2_print = groups_vec();
+		vector<string> group_names_2_print = groups_vec(m_curr_username);
 
 		vector<string> output_vec;
 		string line;
@@ -217,12 +217,12 @@ public:
 		//check that group and user exist, and that user exists in given group if not, throw error
 		if      (group_exists(group_name) == false)
 			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": group does not exist";
-		else if (group_exists(group_name) == false)
-			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist";
+		else if (user_exists(username) == false)
+			throw "userdel: Could not delete user " + username + ": user does not exist";
+		else if (m_curr_username == username)
+			throw "userdel: Could not delete user " + username + ": cannot delete current user";
 		else if (user_in_group(username, group_name) == false)
 			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist in group";
-		else if (m_curr_username == username)
-			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": cannot delete current user";
 		else
 		{
 			int g_pos = group_pos(group_name);
@@ -235,7 +235,7 @@ public:
 	//delets user from all groups
 	void userdel(const string username)
 	{
-		vector<string> group_names_2_del_user_from = groups_vec();
+		vector<string> group_names_2_del_user_from = groups_vec(username);
 
 		for (int i = 0 ; i < group_names_2_del_user_from.size() ; i++)
 		{
@@ -272,14 +272,14 @@ private:
 	}
 
 
-	vector<string> groups_vec()
+	vector<string> groups_vec(const string username)
 	{
 		vector<string> group_names = {};
 
 		//fill group_names_2_print
 		for (int i = 0 ; i < m_group_vec.size() ; i++)
 		{
-			if (user_in_group(m_curr_username, m_group_vec[i].name))
+			if (user_in_group(username, m_group_vec[i].name))
 				group_names.push_back(m_group_vec[i].name);
 		}
 
