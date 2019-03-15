@@ -182,28 +182,6 @@ public:
 					}
 				}
 			}
-
-
-//			for (int i = 0 ; i < m_child_p_vec.size() ; i++)
-//			{
-//				if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
-//				{
-//					Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
-//
-//					for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
-//					{
-//						if (m_child_p_vec[i]->is_dir())
-//							dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name);
-//						else
-//							dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
-//					}
-//
-//					delete dir_2_delete;
-//					m_child_p_vec.erase(m_child_p_vec.begin() + i);
-//					return;
-//				}
-//			}
-//			throw "rmdir: failed to remove " + dir_name + ":  No such directory";
 		}
 	}
 
@@ -232,24 +210,6 @@ public:
 				}
 			}
 		}
-
-
-
-//		if (user_has_perms('w', file_p, md))
-//			cout << filename << " executed!" << endl;
-//		else
-//			throw "./: cannot access " + filename + ": Permission Denied";
-//
-//		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
-//		{
-//			if (m_child_p_vec[i]->m_name == filename and m_child_p_vec[i]->is_file())
-//			{
-//				delete m_child_p_vec[i];
-//				m_child_p_vec.erase(m_child_p_vec.begin() + i);
-//				return;
-//			}
-//		}
-//		throw "rm: failed to remove " + filename + ":  No such file";
 	}
 
 
@@ -309,7 +269,6 @@ public:
 				throw "cd: invalid input"; //this wont print, it will just say ERROR b/c its not returning anything but thats fine, im lazy
 				File_Sys_Obj * cur_fso_p = m_parent_dir_p->get_dir_p_from_children(m_name);
 				return static_cast<Dir*>(cur_fso_p);
-//				return *this;
 			}
 			else
 				return m_parent_dir_p;
@@ -361,7 +320,6 @@ public:
 				return;
 			}
 		}
-//		cout << "in touch, md.m_curr_username, md.owning_group_name():  " << md.m_curr_username << "  ,  " << md.owning_group_name() << endl; //`````````
 
 		File *new_file = new File(name, md.m_curr_username, md.owning_group_name());
 
