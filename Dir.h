@@ -21,46 +21,18 @@ const Membership_Database NULL_MEMBERSHIP_DATABASE = Membership_Database(true);
 
 
 // ????????????????????????????????????????????????????????????????????????????????????????????
-// what is 1 in front of pbg thing in ls -l ?
 
-// if you try to ./ a file that exists but that you cannot see, should it say "no file of that name exists" or "access denied"?
 
-//   if root_user belongs to the "users" and "specieal_users" groups, and file_1.txt belongs to "root_user", and
-//   file_1.txt has rwx for group perms, should any user that belongs to either "users" or "specieal_users" have full perms
-//   to file_1.txt?
-
-// if group and owner perms are both --- and public is rwx, should user be able to see file?
-
-// if you dont have read perm but you do have write perm, does that mean you should be able to rm/rmdir a file you cant see?
-
-// any reason not to just do db of strings like Im doing?  what will we build on top of this?
-
-// with useradd –G - we can assume there will always be just one space like last time right?
-
-// with useradd –G - the whole thing should fail if you include a group that doesnt exist right?
-
-// useradd <username> should create a NEW user and add it to the default group right?
-
-// there is no way to add an existing user to multiple groups at once right?
-
-//   "useradd: could not add user " + new_user_name + " one or more of the given groups do not exist" - ok for useradd -g
-//   when given group(s) that dont exist?
-
-// LP:  any way to do group pos thing but with pointers?
 
 //----------------------------------------------------------------------------------------------------
 
 // what should happen when the owning user of a file is deleted? should ls -l still show the deleted user as the owner?
 
-// if you have read but not write permissions to a directory, but you have full permissions to all files within the directory,
-// should you be able to cd into the directory even though you cant see it?  And if yes, should you then be able to see all
-// the files within the directory with ls?
 
-// should it say something if you try to switchto() to the current user?
+
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//fix error msg from last time
-
+// check that you can do stuff to files you cant see
 
 
 class Dir : public File_Sys_Obj
@@ -181,6 +153,7 @@ public:
 		{
 			if (user_has_perms('w', dir_p, md) == false)
 				throw "rmdir: failed to remove " + dir_name + ":  Permission Denied";
+//			else if (dir_p->)
 			else
 			{
 				for (int i = 0 ; i < m_child_p_vec.size() ; i++)
@@ -188,6 +161,12 @@ public:
 					if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
 					{
 						Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
+
+						if(dir_2_delete->m_child_p_vec.size() > 0)
+						{
+							throw "rmdir: failed to remove " + dir_name + ":  Directory is not empty";
+							return;
+						}
 
 						for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
 						{
@@ -382,7 +361,7 @@ public:
 				return;
 			}
 		}
-		cout << "in touch, md.m_curr_username, md.owning_group_name():  " << md.m_curr_username << "  ,  " << md.owning_group_name() << endl; //`````````
+//		cout << "in touch, md.m_curr_username, md.owning_group_name():  " << md.m_curr_username << "  ,  " << md.owning_group_name() << endl; //`````````
 
 		File *new_file = new File(name, md.m_curr_username, md.owning_group_name());
 
@@ -407,7 +386,6 @@ public:
 	}
 
 
-	// finish with perms!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//"executes" file if it exists, throws exception otherwise
 	void dot_slash(const string filename, Membership_Database md)
 	{

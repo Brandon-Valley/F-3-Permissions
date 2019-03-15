@@ -31,9 +31,9 @@ string or_perm_strings(const string a, const string b)
 }
 
 // owner  group  public
-string owner_perms (const string perm_str) { return perm_str.substr(0,2); }
-string group_perms (const string perm_str) { return perm_str.substr(3,5); }
-string public_perms(const string perm_str) { return perm_str.substr(6,8); }
+string owner_perms (const string perm_str) { return perm_str.substr(0,3); }
+string group_perms (const string perm_str) { return perm_str.substr(3,6); }
+string public_perms(const string perm_str) { return perm_str.substr(6,9); }
 
 
 
@@ -42,12 +42,16 @@ string build_true_perm_str(const string perm_str, const string owning_username,
 		                   const string owning_group_name, Membership_Database md)
 {
 	string true_perm_str = public_perms(perm_str);
+	cout << "correct owner: " << owning_username << ",  public_perms(perm_str): " << public_perms(perm_str) << endl;//`````````````````````````````````````````````````
+
+
 //	cout << "in build true perm str, or: " << or_perm_strings("rw-", "-w-") << endl;//````````````````````````
 
 	if (owning_username == md.m_curr_username)
 	{
-//		cout << "correct owner: " << owning_username << endl;//`````````````````````````````````````````````````
+		cout << "correct owner: " << owning_username << ",  owner_perms(perm_str): " << owner_perms(perm_str) << endl;//`````````````````````````````````````````````````
 		true_perm_str = or_perm_strings(true_perm_str, owner_perms(perm_str));
+		cout << "  in middle of build_true_perm_str, true_perm_str: " << true_perm_str << endl;//`````````````````````````
 	}
 
 
@@ -71,9 +75,11 @@ bool user_has_perms(const char perm_type_char, const File_Sys_Obj * fso, Members
 	if (md.m_database_null == true)
 		return true;
 
+	cout << "in user_has_perms, fso->m_perm_str: " << fso->m_perm_str << endl;//```````````````````````````````````````````````````````````
+
 //	cout << "in user has perms: " << fso->m_name << endl;//``````````````````````````````````````````````````````````````````````````
 	string true_perm_str = build_true_perm_str(fso->m_perm_str, fso->m_owning_username, fso->m_owning_group_name, md);
-//	cout << "true_perm_str: " << true_perm_str << endl;//111111111111111111111```````````````````````````
+	cout << "true_perm_str: " << true_perm_str << endl;//111111111111111111111`````````````````````````````````````````````````
 
 	if(true_perm_str.find(perm_type_char) != std::string::npos) //if perm_type_char in true_perm_str
 		return true;

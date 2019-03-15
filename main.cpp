@@ -16,7 +16,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database & md)
 
 	vector<string> cv = split(command, " ");
 
-	cout << "cv: " << str_vec_2_str(cv) << endl;//``````````````````````````````````````````````````````````````````````````
+//	cout << "cv: " << str_vec_2_str(cv) << endl;//``````````````````````````````````````````````````````````````````````````
 
 
 	if      (cv.size() == 1 and   cv[0] == "quit")  { exit(0); } //command to stop loop
@@ -254,6 +254,7 @@ int main()
 
 //	cout << cur_dir->owner_perm_str() << endl;
 
+//	cout << or_perm_strings("rwx", "---") << endl;
 
 	while (true)
 	{
