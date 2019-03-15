@@ -210,17 +210,18 @@ public:
 			m_curr_username = username;
 	}
 
-	//need to make sure you cant delete root user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//deletes user from given group
 	void userdel_G(const string group_name, const string username)
 	{
 		//check that group and user exist, and that user exists in given group if not, throw error
-		if      (group_exists(group_name) == false)
+		if      (ROOT_USERNAME == username)
+			throw "userdel: Could not delete user " + username + ": cannot delete root user";
+		else if (m_curr_username == username)
+			throw "userdel: Could not delete user " + username + ": cannot delete current user";
+		else if (group_exists(group_name) == false)
 			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": group does not exist";
 		else if (user_exists(username) == false)
 			throw "userdel: Could not delete user " + username + ": user does not exist";
-		else if (m_curr_username == username)
-			throw "userdel: Could not delete user " + username + ": cannot delete current user";
 		else if (user_in_group(username, group_name) == false)
 			throw "userdel: Could not delete user " + username + ": from group " + group_name + ": user does not exist in group";
 		else
