@@ -1,0 +1,4 @@
+ls
+mkdir a
+ls -l
+quit

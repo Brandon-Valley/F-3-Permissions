@@ -127,7 +127,7 @@ public:
 		}
 	}
 
-
+	// should you be able to do this inside a dir without write perms????????????????????????????????????????????????????????????????
 	//makes new dir inside current dir and adds a pointer to it to m_dir_child_p_vec
 	void mkdir(const string new_dir_name, Membership_Database md)
 	{
@@ -258,7 +258,7 @@ public:
 
 	}
 
-
+	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//returns pointer to named dir or to m_parent_dict_p if cd ..
 	Dir * cd(const string dir_name)
 	{
@@ -266,22 +266,28 @@ public:
 		{
 			if (m_is_root == true)
 			{
+//				throw "cd: ";// + dir_name + ": No such directory000000000000000000000000000";
 				throw "cd: invalid input"; //this wont print, it will just say ERROR b/c its not returning anything but thats fine, im lazy
-				File_Sys_Obj * cur_fso_p = m_parent_dir_p->get_dir_p_from_children(m_name);
-				return static_cast<Dir*>(cur_fso_p);
+
+//				return;
+//
+//				File_Sys_Obj * cur_fso_p = m_parent_dir_p->get_dir_p_from_children(m_name);
+//				return static_cast<Dir*>(cur_fso_p);
 			}
 			else
 				return m_parent_dir_p;
 		}
-
-
-		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+		else
 		{
-			if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
-				return static_cast<Dir*>(m_child_p_vec[i]);
-		}
 
-		throw "cd: " + dir_name + ": No such directory";
+			for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+			{
+				if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
+					return static_cast<Dir*>(m_child_p_vec[i]);
+			}
+
+			throw "cd: " + dir_name + ": No such directory";
+		}
 	}
 
 
@@ -308,7 +314,8 @@ public:
 		return final_str;
 	}
 
-
+	//make this not work on a dir to update date without write perms!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// should you be able to do this inside a dir without write perms????????????????????????????????????????????????????????????????
 	// if file already exists, update m_last_date_modified, if not, make new file
 	void touch(const string name, Membership_Database md)
 	{
@@ -326,7 +333,7 @@ public:
 		m_child_p_vec.push_back(new_file);
 	}
 
-
+	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//preforms chmod on the file or dir given which exists inside cur_dir, not on cur_dir itself
 	void chmod(const string name, const string perm_num_str)
 	{
@@ -361,6 +368,7 @@ public:
 	}
 
 
+	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//Change the indicated file to be owned by the indicated user  fso_name = file_sys_obj_name
 	void chown(const string username, const string fso_name, Membership_Database md)
 	{
@@ -376,6 +384,7 @@ public:
 	}
 
 
+	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//Change the indicated file to be owned by the indicated group
 	void chgrp(const string group_name, const string fso_name, Membership_Database md)
 	{

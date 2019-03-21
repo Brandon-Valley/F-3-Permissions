@@ -23,13 +23,22 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database & md)
 	else if (cv.size() == 1 and   cv[0] == "exit")  { exit(0); } //command to stop loop
 	else if (cv.size() == 1 and   cv[0] == "pwd")   { cout << dp_cur_dir->pwd() << endl; }
 	else if (cv.size() == 1 and   cv[0] == "ls")    { dp_cur_dir->ls(md); }
-	else if (cv.size() == 1 and   cv[0] == "groups")    { md.groups(); }
+	else if (cv.size() == 1 and   cv[0] == "groups"){ md.groups(); }
 
 
 	else if (cv.size() == 1 and   cv[0].rfind("./", 0) == 0)    { dp_cur_dir->dot_slash(cv[0].substr(2), md); } // if ./ at beginning of str, do dot_slash on str[2:-1]
 
 
-	else if (cv.size() == 2 and   cv[0] == "cd")       { return cur_dir->cd   (cv[1]); }
+
+	else if (cv.size() == 2 and   cv[0] == "cd")
+	{
+		return cur_dir->cd   (cv[1]);
+//		try {
+//				return cur_dir->cd   (cv[1]);
+//			}
+//		catch (...) { cout << "yaaaaaaaaaaaaaay" << endl; }
+	}
+
 	else if (cv.size() == 2 and   cv[0] == "mkdir")    {        cur_dir->mkdir(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "rmdir")    {        cur_dir->rmdir(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "touch")    {        cur_dir->touch(cv[1], md); }
@@ -79,12 +88,16 @@ int main()
 		{
 			try
 			{
-				cout << cur_dir->pwd() << "  >> ";
-				string command;
-				getline(cin, command);
-				cur_dir = parse(command, cur_dir, md);
+				try
+				{
+					cout << cur_dir->pwd() << "  >> ";
+					string command;
+					getline(cin, command);
+					cur_dir = parse(command, cur_dir, md);
+				}
+				catch (string error_msg) { cout << error_msg << endl; }
 			}
-			catch (string error_msg) { cout << error_msg << endl; }
+			catch(char const* error_msg) { cout << error_msg << endl; } //need this for stuff like: throw "cd: invalid input";
 		}
 		catch (...)   { cout << "ERROR" << endl; }
 	}
