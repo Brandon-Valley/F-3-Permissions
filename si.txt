@@ -2,6 +2,6 @@ mkdir d1
 chmod 555 d1
 ls -l
 cd d1
-mkdir d11
+rmdir d11
 ls -l
 quit

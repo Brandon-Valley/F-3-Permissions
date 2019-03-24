@@ -127,8 +127,6 @@ public:
 		}
 	}
 
-	// perms broken !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// should you be able to do this inside a dir without write perms????????????????????????????????????????????????????????????????
 	//makes new dir inside current dir and adds a pointer to it to m_dir_child_p_vec
 	void mkdir(const string new_dir_name, Membership_Database md)
 	{
@@ -152,40 +150,45 @@ public:
 	// removes directory and it's children
 	void rmdir(const string dir_name, Membership_Database md)
 	{
-		File_Sys_Obj * dir_p = get_dir_p_from_children(dir_name);
-
-		if (dir_p == NULL)
-			throw "rmdir: failed: No such directory";
+		//check if parent dir has write perms or is root
+		if (m_name != ROOT_M_NAME and user_has_perms('w', this, md) == false )
+			throw "rmdir: failed to remove " + dir_name + ":  Permission Denied";
 		else
 		{
-			if (user_has_perms('w', dir_p, md) == false)
-				throw "rmdir: failed to remove " + dir_name + ":  Permission Denied";
-//			else if (dir_p->)
+			File_Sys_Obj * dir_p = get_dir_p_from_children(dir_name);
+
+			if (dir_p == NULL)
+				throw "rmdir: failed: No such directory";
 			else
 			{
-				for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+				if (user_has_perms('w', dir_p, md) == false)
+					throw "rmdir: failed to remove " + dir_name + ":  Permission Denied";
+				else
 				{
-					if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
+					for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 					{
-						Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
-
-						if(dir_2_delete->m_child_p_vec.size() > 0)
+						if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
 						{
-							throw "rmdir: failed to remove " + dir_name + ":  Directory is not empty";
+							Dir * dir_2_delete = static_cast<Dir*>(m_child_p_vec[i]);
+
+							if(dir_2_delete->m_child_p_vec.size() > 0)
+							{
+								throw "rmdir: failed to remove " + dir_name + ":  Directory is not empty";
+								return;
+							}
+
+							for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
+							{
+								if (m_child_p_vec[i]->is_dir())
+									dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
+								else
+									dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
+							}
+
+							delete dir_2_delete;
+							m_child_p_vec.erase(m_child_p_vec.begin() + i);
 							return;
 						}
-
-						for (int i = 0 ; i < dir_2_delete->m_child_p_vec.size() ; i++)
-						{
-							if (m_child_p_vec[i]->is_dir())
-								dir_2_delete->rmdir(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
-							else
-								dir_2_delete->rm(dir_2_delete->m_child_p_vec[i]->m_name, NULL_MEMBERSHIP_DATABASE);
-						}
-
-						delete dir_2_delete;
-						m_child_p_vec.erase(m_child_p_vec.begin() + i);
-						return;
 					}
 				}
 			}
