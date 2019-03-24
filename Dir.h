@@ -85,7 +85,7 @@ private:
 
 
 public:
-	Dir * m_parent_dir_p;//File_Sys_Obj * m_parent_dir_p;//	Dir * m_parent_dir_p;
+	Dir * m_parent_dir_p;
 	vector<File_Sys_Obj*> m_child_p_vec = {};
 
 
@@ -132,15 +132,8 @@ public:
 	//makes new dir inside current dir and adds a pointer to it to m_dir_child_p_vec
 	void mkdir(const string new_dir_name, Membership_Database md)
 	{
-
-		if (m_name != ROOT_M_NAME) //`````````````````````````````````````````````````````````````````````````````````````````````````
-		{
-			cout << "parent perm str: " << m_parent_dir_p->m_perm_str << endl;//````````````````````````````````````````````````````````````
-			cout << "in mkdir, user_has_perms('w', m_parent_dir_p, md) = " << user_has_perms('w', m_parent_dir_p, md) << endl;//```````````````````````````````````````````````
-		}
-
 		//check if parent dir has write perms or is root
-		if (m_name != ROOT_M_NAME and user_has_perms('w', m_parent_dir_p, md) == false )
+		if (m_name != ROOT_M_NAME and user_has_perms('w', this, md) == false )
 			throw "mkdir: cannot create directory ‘" + new_dir_name + "’: Permission Denied";
 		else
 		{
@@ -149,15 +142,7 @@ public:
 			else
 			{
 				Dir * new_dir = new Dir(new_dir_name, md.m_curr_username, md.owning_group_name());
-
-				cout << "in mkdir, about to make new thing, m_perm_str:" << m_perm_str << endl;//```````````````````````````````````````````````
 				new_dir->m_parent_dir_p = this;
-				if (m_name != ROOT_M_NAME)//``````````````````````````````````````````````````````````````````````````````````````````
-				{
-					cout << "in mkdir, just made new thing, m_parent_dir_p->m_perm_str:" << m_parent_dir_p->m_perm_str << endl;//```````````````````````````````````````````````
-
-				}
-
 				m_child_p_vec.push_back(new_dir);
 			}
 		}
