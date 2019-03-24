@@ -32,7 +32,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database & md)
 
 	else if (cv.size() == 2 and   cv[0] == "cd")
 	{
-		return cur_dir->cd   (cv[1]);
+		return cur_dir->cd   (cv[1], md);
 //		try {
 //				return cur_dir->cd   (cv[1]);
 //			}

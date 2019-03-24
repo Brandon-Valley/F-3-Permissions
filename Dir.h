@@ -260,20 +260,12 @@ public:
 
 	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//returns pointer to named dir or to m_parent_dict_p if cd ..
-	Dir * cd(const string dir_name)
+	Dir * cd(const string dir_name, Membership_Database md)
 	{
 		if (dir_name == "..")
 		{
 			if (m_is_root == true)
-			{
-//				throw "cd: ";// + dir_name + ": No such directory000000000000000000000000000";
-				throw "cd: invalid input"; //this wont print, it will just say ERROR b/c its not returning anything but thats fine, im lazy
-
-//				return;
-//
-//				File_Sys_Obj * cur_fso_p = m_parent_dir_p->get_dir_p_from_children(m_name);
-//				return static_cast<Dir*>(cur_fso_p);
-			}
+				throw "cd: invalid input";
 			else
 				return m_parent_dir_p;
 		}
@@ -283,7 +275,12 @@ public:
 			for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 			{
 				if (m_child_p_vec[i]->m_name == dir_name and m_child_p_vec[i]->is_dir())
-					return static_cast<Dir*>(m_child_p_vec[i]);
+				{
+					if (user_has_perms('x', m_child_p_vec[i], md))
+						return static_cast<Dir*>(m_child_p_vec[i]);
+					else
+						throw "cd: cannot access " + dir_name + ": Permission Denied";
+				}
 			}
 
 			throw "cd: " + dir_name + ": No such directory";
