@@ -258,7 +258,6 @@ public:
 
 	}
 
-	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//returns pointer to named dir or to m_parent_dict_p if cd ..
 	Dir * cd(const string dir_name, Membership_Database md)
 	{

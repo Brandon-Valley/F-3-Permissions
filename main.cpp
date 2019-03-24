@@ -29,16 +29,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database & md)
 	else if (cv.size() == 1 and   cv[0].rfind("./", 0) == 0)    { dp_cur_dir->dot_slash(cv[0].substr(2), md); } // if ./ at beginning of str, do dot_slash on str[2:-1]
 
 
-
-	else if (cv.size() == 2 and   cv[0] == "cd")
-	{
-		return cur_dir->cd   (cv[1], md);
-//		try {
-//				return cur_dir->cd   (cv[1]);
-//			}
-//		catch (...) { cout << "yaaaaaaaaaaaaaay" << endl; }
-	}
-
+	else if (cv.size() == 2 and   cv[0] == "cd")       { return cur_dir->cd   (cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "mkdir")    {        cur_dir->mkdir(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "rmdir")    {        cur_dir->rmdir(cv[1], md); }
 	else if (cv.size() == 2 and   cv[0] == "touch")    {        cur_dir->touch(cv[1], md); }
