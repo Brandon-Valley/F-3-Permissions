@@ -85,7 +85,7 @@ private:
 
 
 public:
-	File_Sys_Obj * m_parent_dir_p;//	Dir * m_parent_dir_p;
+	Dir * m_parent_dir_p;//File_Sys_Obj * m_parent_dir_p;//	Dir * m_parent_dir_p;
 	vector<File_Sys_Obj*> m_child_p_vec = {};
 
 
@@ -149,7 +149,15 @@ public:
 			else
 			{
 				Dir * new_dir = new Dir(new_dir_name, md.m_curr_username, md.owning_group_name());
+
+				cout << "in mkdir, about to make new thing, m_perm_str:" << m_perm_str << endl;//```````````````````````````````````````````````
 				new_dir->m_parent_dir_p = this;
+				if (m_name != ROOT_M_NAME)//``````````````````````````````````````````````````````````````````````````````````````````
+				{
+					cout << "in mkdir, just made new thing, m_parent_dir_p->m_perm_str:" << m_parent_dir_p->m_perm_str << endl;//```````````````````````````````````````````````
+
+				}
+
 				m_child_p_vec.push_back(new_dir);
 			}
 		}
