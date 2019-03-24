@@ -1,7 +1,10 @@
 mkdir d1
+cd d1
+touch f1
+cd ..
 chmod 555 d1
 ls -l
 cd d1
-rmdir d11
+rm f1
 ls -l
 quit

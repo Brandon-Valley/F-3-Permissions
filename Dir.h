@@ -199,6 +199,13 @@ public:
 	// removes file
 	void rm(const string filename, Membership_Database md)
 	{
+		//check if parent dir has write perms or is root
+		if (m_name != ROOT_M_NAME and user_has_perms('w', this, md) == false )
+		{
+			throw "rm: failed to remove " + filename + ":  Permission Denied";
+			return;
+		}
+
 		File_Sys_Obj * file_p = get_file_p_from_children(filename);
 
 		if (file_p == NULL)
