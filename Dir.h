@@ -346,7 +346,6 @@ public:
 		m_child_p_vec.push_back(new_file);
 	}
 
-	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//preforms chmod on the file or dir given which exists inside cur_dir, not on cur_dir itself
 	void chmod(const string name, const string perm_num_str, Membership_Database md)
 	{
