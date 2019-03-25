@@ -7,4 +7,12 @@ switchto user2
 chown user2 d1
 chown user2 f1
 ls -l
+
+
+
+useradd -G users user2
+groupadd group2
+useradd -G group2,users user3
+chown user3 d1
+ls -l
 quit
