@@ -327,25 +327,36 @@ public:
 		return final_str;
 	}
 
-	//make this not work on a dir to update date without write perms!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// should you be able to do this inside a dir without write perms????????????????????????????????????????????????????????????????
+
 	// if file already exists, update m_last_date_modified, if not, make new file
 	void touch(const string name, Membership_Database md)
 	{
-		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
+		//check if parent dir has write perms
+		if ( user_has_perms('w', this, md) == false )
 		{
-			if (m_child_p_vec[i]->m_name == name)
-			{
-				m_child_p_vec[i]->update_last_date_modified();
-				return;
-			}
+			throw "touch: Permission Denied";
+			return;
 		}
 
-		File *new_file = new File(name, md.m_curr_username, md.owning_group_name());
 
-		m_child_p_vec.push_back(new_file);
+		if (in_children(name)) //if fso exists already
+		{
+			File_Sys_Obj * fso_p = get_p_from_children(name);
+
+			if ( user_has_perms('w', fso_p, md) == false ) //check if fso has write perms
+				throw "touch: cannot access " + name +": Permission Denied";
+			else
+				fso_p->update_last_date_modified();
+			return;
+		}
+		else
+		{
+			File * new_file = new File(name, md.m_curr_username, md.owning_group_name());
+			m_child_p_vec.push_back(new_file);
+		}
 	}
 
+	// waiting on email, should this work inside dir withoup write - currently does not??????????????????????????????????????????????????????
 	//preforms chmod on the file or dir given which exists inside cur_dir, not on cur_dir itself
 	void chmod(const string name, const string perm_num_str, Membership_Database md)
 	{
