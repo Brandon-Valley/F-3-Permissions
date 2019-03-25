@@ -398,7 +398,6 @@ public:
 	}
 
 
-	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//Change the indicated file to be owned by the indicated user  fso_name = file_sys_obj_name
 	void chown(const string username, const string fso_name, Membership_Database md)
 	{
@@ -415,19 +414,19 @@ public:
 	}
 
 
-	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//Change the indicated file to be owned by the indicated group
 	void chgrp(const string group_name, const string fso_name, Membership_Database md)
 	{
+		File_Sys_Obj * fso_p = get_p_from_children(fso_name);
+
 		if      (in_children(fso_name) == false)
 			throw "chgrp: cannot access " + fso_name + ": does not exist";
 		else if (md.group_exists(group_name) == false)
 			throw "chgrp: cannot access group " + group_name + ": group does not exist";
+		else if (user_has_perms('w', fso_p, md) == false)
+			throw "chgrp: cannot access " + fso_name + ": Permission Denied";
 		else
-		{
-			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
 			fso_p->m_owning_group_name = group_name;
-		}
 	}
 };
 
