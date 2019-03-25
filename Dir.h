@@ -348,12 +348,27 @@ public:
 
 	// check perms !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//preforms chmod on the file or dir given which exists inside cur_dir, not on cur_dir itself
-	void chmod(const string name, const string perm_num_str)
+	void chmod(const string name, const string perm_num_str, Membership_Database md)
 	{
+		//check if parent dir has write perms
+		if ( user_has_perms('w', this, md) == false )
+		{
+			throw "chmod: cannot access " + name +": Permission Denied";
+			return;
+		}
+
+
 		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
 			if (m_child_p_vec[i]->m_name == name)
 			{
+				//check if fso has write perms
+				if ( user_has_perms('w', m_child_p_vec[i], md) == false )
+				{
+					throw "chmod: cannot access " + name +": Permission Denied";
+					return;
+				}
+
 				string new_perm_str = perm_num_2_str(perm_num_str);
 
 				m_child_p_vec[i]->m_perm_str = perm_num_2_str(perm_num_str);

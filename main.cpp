@@ -42,7 +42,7 @@ Dir * parse(const string command, Dir * cur_dir, Membership_Database & md)
 	else if (cv.size() == 2 and   cv[0] == "ls" and cv[1] == "-l") { cur_dir->ls_l(md); }
 
 
-	else if (cv.size() == 3 and   cv[0] == "chmod")           { cur_dir->chmod(cv[2], cv[1]    ); }
+	else if (cv.size() == 3 and   cv[0] == "chmod")           { cur_dir->chmod(cv[2], cv[1], md); }
 	else if (cv.size() == 3 and   cv[0] == "chown")           { cur_dir->chown(cv[1], cv[2], md); }
 	else if (cv.size() == 3 and   cv[0] == "chgrp")           { cur_dir->chgrp(cv[1], cv[2], md); }
 
