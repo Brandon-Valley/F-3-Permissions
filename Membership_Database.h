@@ -230,6 +230,12 @@ public:
 	//delets user from all groups
 	void userdel(const string username)
 	{
+		if (user_exists(username) == false)
+		{
+			throw "userdel: Could not delete user " + username + ": user does not exist";
+			return;
+		}
+
 		vector<string> group_names_2_del_user_from = groups_vec(username);
 
 		for (int i = 0 ; i < group_names_2_del_user_from.size() ; i++)

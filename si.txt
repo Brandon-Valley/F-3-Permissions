@@ -15,4 +15,12 @@ groupadd group2
 useradd -G group2,users user3
 chown user3 d1
 ls -l
+
+
+
+userdel user2
+userdel bbbbb
+userdel user3
+userdel user3
+ls -l
 quit
