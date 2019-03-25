@@ -356,18 +356,10 @@ public:
 		}
 	}
 
-	// waiting on email, should this work inside dir withoup write - currently does not??????????????????????????????????????????????????????
+
 	//preforms chmod on the file or dir given which exists inside cur_dir, not on cur_dir itself
 	void chmod(const string name, const string perm_num_str, Membership_Database md)
 	{
-		//check if parent dir has write perms
-		if ( user_has_perms('w', this, md) == false )
-		{
-			throw "chmod: cannot access " + name +": Permission Denied";
-			return;
-		}
-
-
 		for (int i = 0 ; i < m_child_p_vec.size() ; i++)
 		{
 			if (m_child_p_vec[i]->m_name == name)
@@ -410,15 +402,16 @@ public:
 	//Change the indicated file to be owned by the indicated user  fso_name = file_sys_obj_name
 	void chown(const string username, const string fso_name, Membership_Database md)
 	{
+		File_Sys_Obj * fso_p = get_p_from_children(fso_name);
+
 		if      (in_children(fso_name) == false)
 			throw "chown: cannot access " + fso_name + ": does not exist";
 		else if (md.user_exists(username) == false)
 			throw "chown: cannot access user " + username + ": user does not exist";
+		else if (user_has_perms('w', fso_p, md) == false)
+			throw "chown: cannot access " + fso_name + ": Permission Denied";
 		else
-		{
-			File_Sys_Obj * fso_p = get_p_from_children(fso_name);
 			fso_p->m_owning_username = username;
-		}
 	}
 
 
