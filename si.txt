@@ -32,8 +32,18 @@ userdel -G user2 ggggggg
 groupadd group3
 useradd -G group3 user4
 userdel -G group3 user2
-switchto user4
-switchto user2
 userdel -G group3 user4
+
+
+
+
+usermod -a -G gggggggg
+usermod -a -G users
+useradd user4
 switchto user4
+userdel -G group3 user2
+switchto user2
+usermod -a -G group3
+switchto user4
+userdel -G group3 user2
 quit
