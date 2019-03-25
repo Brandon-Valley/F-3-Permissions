@@ -23,4 +23,17 @@ userdel bbbbb
 userdel user3
 userdel user3
 ls -l
+
+
+
+userdel root_user
+userdel -G users root_user
+userdel -G user2 ggggggg
+groupadd group3
+useradd -G group3 user4
+userdel -G group3 user2
+switchto user4
+switchto user2
+userdel -G group3 user4
+switchto user4
 quit
