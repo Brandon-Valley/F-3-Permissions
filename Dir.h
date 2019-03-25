@@ -130,8 +130,8 @@ public:
 	//makes new dir inside current dir and adds a pointer to it to m_dir_child_p_vec
 	void mkdir(const string new_dir_name, Membership_Database md)
 	{
-		//check if parent dir has write perms or is root
-		if (m_name != ROOT_M_NAME and user_has_perms('w', this, md) == false )
+		//check if parent dir has write perms
+		if ( user_has_perms('w', this, md) == false )
 			throw "mkdir: cannot create directory ‘" + new_dir_name + "’: Permission Denied";
 		else
 		{
@@ -150,8 +150,8 @@ public:
 	// removes directory and it's children
 	void rmdir(const string dir_name, Membership_Database md)
 	{
-		//check if parent dir has write perms or is root
-		if (m_name != ROOT_M_NAME and user_has_perms('w', this, md) == false )
+		//check if parent dir has write perms
+		if ( user_has_perms('w', this, md) == false )
 			throw "rmdir: failed to remove " + dir_name + ":  Permission Denied";
 		else
 		{
@@ -199,8 +199,8 @@ public:
 	// removes file
 	void rm(const string filename, Membership_Database md)
 	{
-		//check if parent dir has write perms or is root
-		if (m_name != ROOT_M_NAME and user_has_perms('w', this, md) == false )
+		//check if parent dir has write perms
+		if ( user_has_perms('w', this, md) == false )
 		{
 			throw "rm: failed to remove " + filename + ":  Permission Denied";
 			return;
@@ -275,7 +275,6 @@ public:
 
 	}
 
-	//waiting on email - should this need read or execute perms ?????????????????????????????????????????????????????????????????????????????????
 	//returns pointer to named dir or to m_parent_dict_p if cd ..
 	Dir * cd(const string dir_name, Membership_Database md)
 	{
