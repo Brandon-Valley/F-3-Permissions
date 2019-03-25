@@ -26,13 +26,11 @@ const Membership_Database NULL_MEMBERSHIP_DATABASE = Membership_Database(true);
 
 //----------------------------------------------------------------------------------------------------
 
-// what should happen when the owning user of a file is deleted? should ls -l still show the deleted user as the owner?
 
 
 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// check that you can do stuff to files you cant see
 
 
 class Dir : public File_Sys_Obj

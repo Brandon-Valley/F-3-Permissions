@@ -1,0 +1,6 @@
+/  >> /  >> useradd: Could not add user user2: user already exists
+/  >> /  >> /  >> rwxrwxrwx	root_user	users	888	2019-03-25.17:14:04	d1/
+rwxrwxrwx	root_user	users	888	2019-03-25.17:14:04	f1
+/  >> /  >> /  >> /  >> rwxrwxrwx	user2	users	888	2019-03-25.17:14:04	d1/
+rwxrwxrwx	user2	users	888	2019-03-25.17:14:04	f1
+/  >> 

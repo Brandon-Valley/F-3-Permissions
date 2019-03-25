@@ -1,10 +1,10 @@
+useradd user2
+useradd user2
 mkdir d1
-cd d1
 touch f1
-cd ..
-chmod 555 d1
 ls -l
-cd d1
-rm f1
+switchto user2
+chown user2 d1
+chown user2 f1
 ls -l
 quit

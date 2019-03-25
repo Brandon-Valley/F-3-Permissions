@@ -97,18 +97,12 @@ public:
 	{
 		for (int i = 0 ; i < m_group_vec.size() ; i++)
 		{
-//			cout << "in owning_group_name, m_group_vec[i].name: " << m_group_vec[i].name << endl;//``````````````````
-//			cout << "in owning_group_name, m_curr_username: " << m_curr_username << endl;//``````````````````
-
 			if (user_in_group(m_curr_username, m_group_vec[i].name))
 			{
-//				cout << "in owning_group_name, about to return : " << m_group_vec[i].name << endl;//``````````````````
 				return m_group_vec[i].name;
 			}
 
 		}
-		cout << "in owning_group_name, about to return nothing" << endl;//`````````````````````````````````````
-		print(); //``````````````````````````````````````````````````````````````````````````````
 	}
 
 
@@ -127,7 +121,7 @@ public:
 		}
 	}
 
-	// test that you cant have empty group names and that it doesnt work if you use a grop name that doesnt exist !!!!!!!!!!
+
 	// make new user and add it to all groups given in vec
 	void useradd_G (const string group_names_str, const string new_username)
 		{
