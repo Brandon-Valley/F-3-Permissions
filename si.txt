@@ -46,4 +46,15 @@ switchto user2
 usermod -a -G group3
 switchto user4
 userdel -G group3 user2
+
+
+
+chown bbbbbb d1
+chown user2 dddddd
+chmod 555 f1
+chown user4 f1
+touch f2
+chown user4 d1
+chown user4 f2
+ls -l
 quit
